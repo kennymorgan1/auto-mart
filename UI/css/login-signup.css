@@ -1,1716 +1,459 @@
-:root{
-	--container-bg-color: #333;
-	--left-button-hover-color: rgba(161, 11, 11, 0.4);
-	/*--left-bg-color: rgba(11, 11, 11, 0.4);
-	--right-bg-color: rgba(255, 230, 230, 0.4);*/
-	--right-button-hover-color: rgba(92, 92, 92, 0.4);
-	--hover-width: 55%;
-	--other-width: 45%;
-	--speed: 500ms;
-}
-html{
-	padding: 0;
-    font-family: "Montserrat", arial;
-	margin:0;
-	width:100%;
-	height: 100%;
-}
-body, header, .content{
-	padding: 0;
-    font-family: "Montserrat", arial;
-	margin:0;
-	width:100%;
-	height: 100%;
-	overflow-x: hidden;
-}
-a{
-	text-decoration: none;
-}
-.clear{
-	clear: both;
-}
-/*.banner-split.left .button:hover{
-	background-color: var(--left-button-hover-color);
-	border-color: var(--left-button-hover-color);
-}*/
-.banner-split.left {
-    -webkit-transition: width 0s, height 0s; /* For Safari 3.1 to 6.0 */
-    transition: width 0.5s, height 0s;
-}
-.banner-split.left:hover{
-    width: 54%;
-}
-.banner-split.right .button:hover{
-	background-color: var(--right-button-hover-color);
-	border-color: var(--right-button-hover-color);
-}
-.form-container{
-	position: relative;
-	width: 100%;
-	height: 100%;
-}
-.banner-split{
-	position: absolute;
-	width: 50%;
-	height: 100%;
-}
-.banner-split.left{
-	left: 0;
-	background:url('../img/login-banner.jpg') no-repeat right 0.75rem center;
-	background-size: cover;
-}
-.banner-split.left:before{
-	position: absolute;
-	content: "";
-	width: 100%;
-	height: 100%;
-	background: var(--left-bg-color);
-}
-.banner-split.right{
-	right: 0;
-	background:url('../img/signup-banner.jpg') no-repeat right 0.75rem center;
-	background-size: cover;
+/*---------------------------------------------*/
+/* BASIC SETUP */
+/*---------------------------------------------*/
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
 }
 
-.banner-split.right h1{
-	text-transform: capitalize;
-	color: #ffffff;
-	font-weight: bold;
-	font-size: 3em;
-	letter-spacing: 0px;
-	position: absolute;
-	left: 50%;
-	top: 30%;
-	transform: translateX(-50%);
-	white-space: nowrap;
-}
-.banner-split.right h3{
-	text-transform: capitalize;
-	color: #ffffff;
-	font-weight: bold;
-	font-size: 1em;
-	letter-spacing: 1px;
-	line-height: 25px;
-	position: absolute;
-	left: 50%;
-	top: 30%;
-	transform: translateX(-50%);
-	white-space: nowrap;
-}
-.banner-split.right p{
-	position: absolute;
-	left: 5%;
-	letter-spacing: 0;
-	line-height: 25px;
-	top: 50%;
-	width: 90%;
-	color: #fff;
-	white-space: all;
-}
-.banner-split.right:before{
-	position: absolute;
-	width: 100%;
-	height: 100%;
-	background:var(--right-bg-color);
-}
-.banner-split.left, .banner-split.right, .banner-split.right:before, .banner-split.left:before{
-	transition: var(--speed) all ease-in-out;
-}
-.hover-left .left{
-	width:var(--hover-width);
-}
-.hover-left .right{
-	width: var(--other-width)
-}
-.hover-left .right:before{
-	z-index: 2;
-}
-.hover-right .right{
-	width: var(--hover-width);
-}
-.hover-right .left{
-	width: var(--other-width);
-}
-.hover-right .left:before{
-	z-index: 2;
-}
-.login-section{
-	width: 60%;
-	position: absolute;
-	left: 50%;
-	top: 10%;
-	transform: translateX(-50%);
-	white-space: nowrap;
-
-}
-.login-section .text-danger{
-	color: red;
-	margin-top: 5%!important;
-	font-size: 14px;
-}
-p.login-title{
-	text-align: center;
-	font-size: 20px;
-	font-weight: 500;
-	font-family: inherit;
-}
-.login-section p a {
-	text-decoration: none;
-	color: #9816f4;
-}
-.login-section input[type="text"], input[type="email"], input[type="password"]{
-	padding: 4%;
-	margin-top: 5%;
-	width: 100%;
-	font-size: 16px;
-	border-radius: 40px;
-	margin-bottom: 0%;
-	background: #f7f7f7;
-	border: 2px solid #f7f7f7;
+html,
+body {
+    background-color: #fff;
+    color: #555;
+    font-family: 'Lato', 'Arial', 'sans-serif';
+    font-weight: 300;
+    font-size: 20px;
+    text-rendering: optimizeLegibility;
+    overflow-x: hidden;
 }
 
-.login-section h1{
-	font-size: 32px;
-	font-weight: bold;
-	text-align: center;
-	margin-top: 15px;
-	font-family: "Cookie";
+.clearfix {zoom: 1}
+.clearfix:after {
+    content: '.';
+    clear: both;
+    display: block;
+    height: 0;
+    visibility: hidden;
+}
+
+/*---------------------------------------------*/
+/* REUSEABLE COMPONENTS */
+/*---------------------------------------------*/
+
+.row {
+    max-width: 1140px;
+    margin: 0 auto;
+} 
+
+section {
+    padding: 80px 0;
+}
+
+.box {
+    padding: 1%;
+}
+
+/*--------HEADINGS---------*/
+h1 {
+    margin: 0;
+    margin-bottom: 20px;
+    color: #fff;
+    font-size: 240%;
+    font-weight: 300;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    word-spacing: 4px;
+}
+
+h2 {
+    font-size: 180%;
+    text-align: center;
+    margin-bottom: 30px;    
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    word-spacing: 2px;
+}
+
+h3 {
+    font-weight: 300;
+    text-transform: uppercase;
+    font-size: 110%;
+    margin-bottom: 15px;
+}
+
+h2:after {
+    display: block;
+    height: 2px;
+    background-color: #e67e22;
+    content: " ";
+    width: 100px;
+    margin: 0 auto;
+    margin-top: 30px;
+}
+
+/*--------PARAGRAPHS---------*/
+.long-copy{
+    line-height: 145%;
+    width: 70%;
+    margin-left: 15%;
+}
+
+.box p {
+    font-size: 90%;
+    line-height: 145%;
+}
+
+/*--------ICONS---------*/
+.icon-big {
+    font-size: 350%;
+    display: block;
+    color: #e67e22;
+    margin-bottom: 10px;
+}
+
+.icon-small {
+    display: inline-block;
+    width: 30px;
+    text-align: center;
+    color: #e67e22;
+    font-size: 120%;
+    margin-right: 10px;
+
+    /*secrets to align text and icons*/
+    line-height: 120%;
+    vertical-align: middle;
+    margin-top: -5px;
 
 }
 
-.login-section button{
-	background: #9816f4;
-	margin-top: 5%;
-	margin-bottom: 10%;
-	padding: 4%;
-	color: #fff;
-    border: none;
-	font-size: 16px;
-	border-radius: 40px;
-	width: 35%;
-	cursor: pointer;
-	-webkit-transition: all 1s;
-	transition: all 1s;
-	max-height: inherit;
+/*--------LINKS---------*/
+a:link,
+a:visited {
+    color: #e67e22;
+    text-decoration: none;
+    border-bottom: 1px solid #e67e22;
+    padding-bottom: 1px;
+    transition: border-bottom 0.2s, color 0.2s
 }
-.login-form .login-input-field-checkbox{
-	padding-left: 5%;
+
+a:hover,
+a:active {
+    color: #555;
+    border-bottom: 1px solid transparent;
 }
-/*******login and signup ui ends here *********/
-/**********************************************/
-nav{
-	padding: 20px 15%;
+
+/*--------BUTTONS---------*/
+.btn:link,
+.btn:visited,
+input[type=submit] {
+    display: inline-block;
+    padding: 10px 30px;
+    font-weight: 300;
+    text-decoration: none;
+    border-radius: 200px;
+    transition: background-color 0.2s, border 0.2s, color 0.2s;
 }
-.logo{
-	font-size: 32px;
-	font-weight: bold;
-	float: left;
-	margin-top: 15px;
-	font-family: "Cookie";
+
+.btn-full:link,
+.btn-full:visited,
+input[type=submit] {
+    background-color: #e67e22;
+    border: 1px solid #e67e22;
+    color: #fff;
+    margin-right: 15px;
 }
-nav>ul{
-	list-style-type: none;
-	padding: 0;
-	float: right;
+
+.btn-ghost:link,
+.btn-ghost:visited {
+    border: 1px solid #e67e22;
+    color: #e67e22;
 }
-nav>ul>li{
-	float: left;
-	padding: 10px 15px;
+
+.btn:hover,
+.btn:active,
+input[type=submit]:hover,
+input[type=submit]:active {
+    background-color: #cf6d17;
 }
-nav>ul>li>a{
-	color: #fff;
-	font-size: 14px;
-	text-decoration: none;
+
+.btn-full:hover,
+.btn-full:active,
+input[type=submit] {
+    border: 1px solid #cf6d17;
 }
-nav ul li.active a{
-	text-decoration: none;
-	color: #fff;
-	margin-top: -10%;
-	font-weight: 600;
-	font-size: 12px;
-	text-transform: uppercase;
-	border: 2px solid #9816f4;
-	background: #9816f4;
-	cursor: pointer;
-	padding: 10px 30px;
-	border-radius: 50px;
+
+.btn-ghost:hover,
+.btn-ghost:active {
+    border: 1px solid #cf6d17;
+    color: #fff;
 }
-a, nav>ul>li, p{
-	font-size: 13px;
-	font-weight: 600;
-	letter-spacing: 1px;
+
+/*---------------------------------------------*/
+/* HEADER */
+/*---------------------------------------------*/
+
+.logo {
+    height:auto;
+    width:auto;
+    float: left;
+    margin: 5px 0;
+    border-radius: 50%;
+    color: #e67e22;
+    -webkit-border-radius: 50%;
+    -moz-border-radius: 50%;
+    -ms-border-radius: 50%;
+    -o-border-radius: 50%;
 }
-a, nav>ul>li, p{
-	font-weight: lighter;
-	line-height: 18px;
-	text-align: justify; 
+
+/*** Main Nav ***/
+.main-nav {
+    float: right;
+    list-style: none;
+    margin-top: 50px
 }
-header, .content{
-	position: relative;
-	color: #fff;
+
+.main-nav li {
+    display: inline-block;
+    margin-left: 40px;
 }
-.wrapper-left{
-	position: absolute;
-	top: 50%;
-	transform: translateY(-50%);
-	width: 36%;
-	left: 8%;
+
+.main-nav li a:link,
+.main-nav li a:visited {
+    padding: 8px 0px;
+    color: #fff;
+    text-decoration: none;
+    text-transform: uppercase;
+    font-size: 90%;
+    border-bottom: 2px solid transparent;
+    transition: border-bottom 0.2s;
+    -webkit-transition: border-bottom 0.2s;
+    -moz-transition: border-bottom 0.2s;
+    -ms-transition: border-bottom 0.2s;
+    -o-transition: border-bottom 0.2s;
 }
-.wrapper-left a{
-	text-decoration: none;
-	color: #fff;
-	font-weight: 600;
-	text-transform: uppercase;
-	border: 2px solid #fff;
-	display: inline-block;
-	padding: 15px 30px;
-	border-radius: 50px;
-	margin-top: 15px;
+
+.main-nav li a:hover,
+.main-nav li a:active {
+    border-bottom: 2px solid #e67e22;
 }
-.wrapper-left h1{
-	font-weight: bold;
-	font-size: 35px;
+
+/*** Mobile Nav ***/
+
+.mobile-nav-icon {
+    float: right;
+    margin-top: 3px;
+    cursor:pointer;
+    display: none;
 }
-.wrapper-left p{
-	font-size: 14px;
-	line-height: 25px;
+
+.mobile-nav-icon i {
+    font-size: 200%;
+    color: #fff;
 }
-.wrapper-right{
-	position: absolute;
-	bottom: 40px;
-	width: 50%;
-	right: 0;
+
+/*** Sticky Nav ***/
+.sticky {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: auto;
+    background-color: #272727;
+    z-index: 9999;
+    border-bottom: 2px solid #e67e22;
 }
-.wrapper-right>img{
-	width: 100%;
+
+.sticky .main-nav {
+    margin-top: 18px;
 }
-.logo>i {
-	margin-left: 8px;
+
+.sticky .main-nav li a:link,
+.sticky .main-nav li a:visited {
+    padding: 16px 0px;
+    color: #fff;
 }
-.social-icons{
-	position: absolute;
-	top: 30%;
-	left: 20px;
-	width: 35%;
-}
-.social-icons>ul{
-	list-style-type: none;
-	padding: 0;
-	margin:0;
-}
-.social-icons>ul>li{
-	margin-top: 10px;
-	cursor: pointer;
-}
-.social-icons>ul>li i:hover{
-	background-color: #730099;
-	color: #ffffff;
-}
-.social-icons>ul>li>i{
-	padding: 10px;
-	background-color: #f7f7f7;
-	transition: all 0.3s ease-in-out;
-	color: #9816f4;
-	text-align: center;
-	width: 4% !important;
-	border-radius: 50px;
-}
-.background{
-	position: absolute;
-	height: 100%;
-	width: 150%;
-	top: 0;
-	left: 0;
-	background:linear-gradient(to right, #730099 0%, #730099 20%, #730099 50%);
-	transform:rotateZ(-10deg);
-	transform-origin: bottom left; 
-}
-.questioner-banner{
-	position: absolute;
-	height: 80%;
-	width: 100%;
-	top: 0;
-	left: 0;
-	background:linear-gradient(to right, #730099 0%, #730099 20%, #730099 50%);
-	transform-origin: bottom left; 
-}
-#questions-wrapper-banner {
-	background-color: #f7f7f7;
-	width: 100%;
-	height: 100%;
-}
-#meetup-question-section-wrapper{
-	margin-top: -5% !important;
-	width: 90%;
-	padding-top: 5%;
-	padding-bottom: 5%;
+
+
+/*---------------------------------------------*/
+/* FORM */
+/*---------------------------------------------*/
+
+.signup{
+	width: 80%;
+	display: flex;
 	margin: auto;
 	height: auto;
-}
-
-.meetup-left-section{
-	width: 70%;
-	float: left;
-	background: #eeeeee;
-	margin-bottom: 2%;
-	-webkit-box-shadow: 0px 0px 5px 1px #f7f7f7;
-	-moz-box-shadow: 0px 0px 5px 1px #f7f7f7;
-	-o-box-shadow: 0px 0px 5px 1px #f7f7f7;
-	-ms-box-shadow: 0px 0px 5px 1px #f7f7f7;
-    box-shadow: 0px 0px 5px 1px #f7f7f7;
-	padding: 2%;
-	border-left: 5px solid #9816f4;
-}
-.meetup-left-section h4{
-	float: right;
-	font-size: 13px;
-	padding: .5%;
-	margin-top: -5%;	
-}
-.meetup-left-section p {
-	padding-bottom: 2%;
-	letter-spacing: .3px;
-	line-height: 22px;
-}
-.inline-actions ul {
-	list-style-type: none;
-}
-.inline-actions ul li {
-	display: inline-block;
-	padding-right: 2%;
-}
-.inline-actions ul li a {
-	color: #9816f4;
-	font-size: 14px;
-}
-
-.meetup-right-section{
-	width: 20%;
-	border-right: 5px solid #9816f4;
-	background: #ffffff;
-	padding: 2%;
-	float: right;
-	margin-bottom: 2%;
-}
-.meetup-left-section img{
-	padding-right: 2%;
-}
-.meetup-right-section .ask-question{
-	color: red;
-	text-align: center;
-	background: #f7f7f7;
-	padding: .5%;
-	border-radius: 50px;
-	width: 100%;
-	margin-bottom: 5%;
-	cursor: pointer;
-}
-.meetup-right-section .ask-question p {
-	color: red;
-	text-align: center;
-}
-.post-questions-field{
-	width: 70%;
-	margin: auto;
-
-}
-#questioner-services{
-	margin-top: 2%;
-	width: 100%;
-}
-.section-wrapper{
-	margin-bottom: 25% !important;
-}
-#questioner-services h1{
-	text-align: center;
-	text-transform: uppercase;
-	font-family:'Open Sans', sans-serif; 
-}
-p.meetup-content{
-	width: 50% !important;
-	line-height: 25px;
-	margin:auto;
-	padding: 3%;
-	font-size: 16px !important;
-	text-align: center;
-    font-family: 'Open Sans', sans-serif;
-
-}
-#questioner-services .section-wrapper{
-	width: 80%;
-	margin:auto;
-}
-.section-wrapper .row{
-	width: 28%;
-	text-align: center;
-	padding-left: .5%;
-	padding-right: 2%;
-	margin-right: 2%;
-	margin-bottom: 1%;
-	padding-top: 2%;
-	padding-bottom: 5%;
-	transition: all 0.3s ease 0s;
-	background:;
-	border: 2px solid #f7f7f7;
-	-webkit-box-shadow: 0px 0px 5px 1px #f7f7f7;
-	-moz-box-shadow: 0px 0px 5px 1px #f7f7f7;
-	-o-box-shadow: 0px 0px 5px 1px #f7f7f7;
-	-ms-box-shadow: 0px 0px 5px 1px #f7f7f7;
-    box-shadow: 0px 0px 5px 1px #f7f7f7;
-    z-index: 999;
-	float: left;
-}
-.section-wrapper .row i {
-	color: #9816f4;
-}
-.section-wrapper .row img{
-	width: 25%;
-}
-.section-wrapper .row:hover i{
-}
-.section-wrapper .row:hover{
-	opacity: .8;
-	-webkit-box-shadow: 0px 0px 5px 1px #f7f7f7;
-	-moz-box-shadow: 0px 0px 5px 1px #f7f7f7;
-	-o-box-shadow: 0px 0px 5px 1px #f7f7f7;
-	-ms-box-shadow: 0px 0px 5px 1px #f7f7f7;
-    box-shadow: 0px 0px 5px 1px #f7f7f7;
-}
-.section-wrapper .row:hover a{
-	color: inherit;
-}
-.section-wrapper .row:before{
-	content: "";
-	transition: all 0.3s ease 0s;
-}
-.section-wrapper .row:hover:before{
-	top: 0;
-	right: 0;
-}
-.section-wrapper .row a{
-	text-decoration: none;
-	color: #000;
-	font-weight: 600;
-	text-transform: uppercase;
-	border: 2px solid #9816f4;
-	display: inline-block;
-	padding: 15px 30px;
-	border-radius: 50px;
-}
-.section-wrapper .row p {
-	text-align: center;
-}
-p.description{
-	font-size: 14px;
-	line-height: 25px;
-}
-
-#meetup-section{
-	background:url('../img/login-banner.jpg') no-repeat center center;
-	height: 50%;
-	padding-top: 5%;
-	margin-top:0%;
-	width: 100%;
-}
-.section-meetup-wrapper{
-	margin-bottom: 25% !important;
-}
-#meetup-section h1{
-	text-align: center;
-	text-transform: uppercase;
-	font-family: "Montserrat";
-}
-p.meetup-content{
-	width: 80%;
-	margin:auto;
-	padding: 1%;
-	font-size: 18px;
-	text-align: center;
-    font-family: 'Open Sans', sans-serif;
-
-}
-#meetup-section .section-meetup-wrapper{
-	width: 80%;
-	margin:auto;
-}
-.section-meetup-wrapper .row{
-	width: 20%;
-	text-align: center;
-	padding-left: .5%;
-	padding-right: 2%;
-	margin-right: 2%;
-	padding-top: 2%;
-	padding-bottom: 5%;
-	transition: all 0.3s ease 0s;
-	background:;
-	border: 2px solid #f7f7f7;
-	-webkit-box-shadow: 0px 0px 5px 1px #f7f7f7;
-	-moz-box-shadow: 0px 0px 5px 1px #f7f7f7;
-	-o-box-shadow: 0px 0px 5px 1px #f7f7f7;
-	-ms-box-shadow: 0px 0px 5px 1px #f7f7f7;
-    box-shadow: 0px 0px 5px 1px #f7f7f7;
-    z-index: 999;
-	float: left;
-}
-.section-meetup-wrapper .row i {
-	color: #9816f4;
-}
-.section-meetup-wrapper .row img{
-	width: 25%;
-}
-.section-meetup-wrapper .row:hover i{
-}
-.section-meetup-wrapper .row:hover{
-	opacity: .8;
-	-webkit-box-shadow: 0px 0px 5px 1px #f7f7f7;
-	-moz-box-shadow: 0px 0px 5px 1px #f7f7f7;
-	-o-box-shadow: 0px 0px 5px 1px #f7f7f7;
-	-ms-box-shadow: 0px 0px 5px 1px #f7f7f7;
-    box-shadow: 0px 0px 5px 1px #f7f7f7;
-}
-.section-meetup-wrapper .row:hover a{
-	color: inherit;
-}
-.section-meetup-wrapper .row:before{
-	content: "";
-	transition: all 0.3s ease 0s;
-}
-.section-meetup-wrapper .row:hover:before{
-	top: 0;
-	right: 0;
-}
-.section-meetup-wrapper .row a{
-	text-decoration: none;
-	color: #000;
-	font-weight: 600;
-	text-transform: uppercase;
-	display: inline-block;
-}
-.section-meetup-wrapper .row p {
-	text-align: center;
-}
-
-#how-questioner-works{
-	//background:url('../img/signup-banner.jpg') no-repeat center center;
-	height: 70%;
-	padding-top: 5%;
-	margin-top:0%;
-	width: 100%;
-}
-.how-questioner-works-wrapper{
-	margin-bottom: 25% !important;
-}
-#how-questioner-works h1{
-	text-align: center;
-	text-transform: uppercase;
-	font-family: "Montserrat";
-}
-p.meetup-content{
-	width: 80%;
-	margin:auto;
-	padding: 1%;
-	font-size: 18px;
-	text-align: center;
-    font-family: 'Open Sans', sans-serif;
-
-}
-#how-questioner-works .how-questioner-works-wrapper{
-	width: 90%;
-	margin:auto;
-}
-.how-questioner-works-wrapper .row{
-	width: 40%;
-	text-align: center;
-	padding-left: .5%;
-	padding-right: 2%;
-	margin-left: 5%;
-	margin-right: 2%;
-	padding-top: 2%;
-	padding-bottom: 5%;
-	transition: all 0.3s ease 0s;
-	background:;
-	border: 2px solid #f7f7f7;
-	-webkit-box-shadow: 0px 0px 5px 1px #f7f7f7;
-	-moz-box-shadow: 0px 0px 5px 1px #f7f7f7;
-	-o-box-shadow: 0px 0px 5px 1px #f7f7f7;
-	-ms-box-shadow: 0px 0px 5px 1px #f7f7f7;
-    box-shadow: 0px 0px 5px 1px #f7f7f7;
-    z-index: 999;
-	float: left;
-}
-.how-questioner-works-wrapper .row i {
-	color: #9816f4;
-}
-.how-questioner-works-wrapper .row img{
-	width: 15%;
-}
-.how-questioner-works-wrapper .row:hover i{
-}
-.how-questioner-works-wrapper .row:hover{
-	opacity: .8;
-	-webkit-box-shadow: 0px 0px 5px 1px #f7f7f7;
-	-moz-box-shadow: 0px 0px 5px 1px #f7f7f7;
-	-o-box-shadow: 0px 0px 5px 1px #f7f7f7;
-	-ms-box-shadow: 0px 0px 5px 1px #f7f7f7;
-    box-shadow: 0px 0px 5px 1px #f7f7f7;
-}
-.how-questioner-works-wrapper .row:hover a{
-	color: inherit;
-}
-.how-questioner-works-wrapper .row:before{
-	content: "";
-	transition: all 0.3s ease 0s;
-}
-.how-questioner-works-wrapper .row:hover:before{
-	top: 0;
-	right: 0;
-}
-.how-questioner-works-wrapper .row a{
-	text-decoration: none;
-	color: #000;
-	font-weight: 600;
-	text-transform: uppercase;
-	display: inline-block;
-}
-.how-questioner-works-wrapper .row p {
-	text-align: center;
-}
-
-.feed-section {
-	background: #eee;
-	height: auto;
-	width: 80%;
-	margin-left: 5%;
-	border-left: 6px solid #9816f4;
-	padding: .5%;
-	margin-bottom: 2%;
-}
-.qestions-feed-rows {
-	padding-left: 5%;
-}	
-.feed-created-by {
-	font-weight: bolder !important;
-	color: #9816f4;
-}
-#all-meetup-section{
-	background:url('../img/login-banner.jpg') no-repeat center center;
-	height: 50%;
-	padding-top: 5%;
-	margin-top:0%;
-	width: 100%;
-	margin-bottom: 15%;
-}
-.all-section-meetup-wrapper{
-	margin-bottom: 25% !important;
-}
-#all-meetup-section h1{
-	text-align: center;
-	text-transform: uppercase;
-	font-family: "Montserrat";
-}
-p.meetup-content{
-	width: 80%;
-	margin:auto;
-	padding: 1%;
-	font-size: 18px;
-	text-align: center;
-    font-family: 'Open Sans', sans-serif;
-
-}
-#all-meetup-section .all-section-meetup-wrapper{
-	width: 70%;
-	margin:auto;
-}
-.all-section-meetup-wrapper .row{
-	width: 20%;
-	text-align: center;
-	padding-left: .5%;
-	padding-right: 2%;
-	margin-right: 2%;
-	padding-top: 2%;
-	padding-bottom: 5%;
-	transition: all 0.3s ease 0s;
-	background:;
-	border: 2px solid #f7f7f7;
-	-webkit-box-shadow: 0px 0px 5px 1px #f7f7f7;
-	-moz-box-shadow: 0px 0px 5px 1px #f7f7f7;
-	-o-box-shadow: 0px 0px 5px 1px #f7f7f7;
-	-ms-box-shadow: 0px 0px 5px 1px #f7f7f7;
-    box-shadow: 0px 0px 5px 1px #f7f7f7;
-    z-index: 999;
-	float: left;
-}
-.all-section-meetup-wrapper .row i {
-	color: #9816f4;
-}
-.all-section-meetup-wrapper .row img{
-	width: 25%;
-}
-.all-section-meetup-wrapper .row:hover i{
-}
-.all-section-meetup-wrapper .row:hover{
-	opacity: .8;
-	-webkit-box-shadow: 0px 0px 5px 1px #f7f7f7;
-	-moz-box-shadow: 0px 0px 5px 1px #f7f7f7;
-	-o-box-shadow: 0px 0px 5px 1px #f7f7f7;
-	-ms-box-shadow: 0px 0px 5px 1px #f7f7f7;
-    box-shadow: 0px 0px 5px 1px #f7f7f7;
-}
-.all-section-meetup-wrapper .row:hover a{
-	color: inherit;
-}
-.all-section-meetup-wrapper .row:before{
-	content: "";
-	transition: all 0.3s ease 0s;
-}
-.all-section-meetup-wrapper .row:hover:before{
-	top: 0;
-	right: 0;
-}
-.all-section-meetup-wrapper .row a{
-	text-decoration: none;
-	color: #000;
-	font-weight: 600;
-	text-transform: uppercase;
-	display: inline-block;
-}
-.all-section-meetup-wrapper .row p {
-	text-align: center;
-}
-#footer-main{
-	width: 100%;
-	height: auto;
-	margin:auto;
-	margin-top: 5%;
-	background-color: #303038;
-	padding: 20px 0px;
-}
-#footer-main .footer-social-icons{
-	width: 100%;
-	height: auto;
-	margin:auto;
-}
-#footer-main .footer-social-icons ul{
-	margin:0px;
-	padding: 0px;
-	text-align: center;
-}
-#footer-main .footer-social-icons ul li{
-	display: inline-block;
-	width: 50px;
-	height: 50px;
-	margin: 0px 10px;
-	border-radius: 100%;
-	background: #f7f7f7;
-	transition: all .3s ease-in-out;
-}
-#footer-main .footer-social-icons ul li:hover{
-	background: #9816f4;
-	color: #ffffff;
-	cursor: pointer;
-}
-#footer-main .footer-social-icons ul li{
-	color: #9816f4;
-	font-size: 25px; 
-	line-height: 50px;
-}
-#footer-main .footer-social-icons ul li i:hover{
-	color: #fff;
-}
-#footer-main .footer-menu{
-	width: 100%;
-	height: auto;
-	margin: auto;
-	margin-top: 20px;
-}
-#footer-main .footer-menu ul{
-	margin: 0px;
-	padding: 0px;
-	text-align: center;
-}
-#footer-main .footer-menu ul li{
-	display: inline-block;
-	margin:0px 25px;
-}
-#footer-main .footer-menu ul li a{
-	font-family: "Montserrat";
-	font-size: 12px;
-	font-weight: 400;
-	color:#fff;
-	text-transform: ;
-}
-#footer-bottom{
-	height: auto;
-	margin: auto;
-	background: #730099;
-	padding: 2px;
-}
-#footer-bottom p{
-	font-family: "Montserrat";
-	font-size: 16px;
-	text-align: center;
-	color: #fff;
-}
-#footer-bottom p a{
-	color: #fff;
-}
-#back-to-top{
-	position: fixed;
-	bottom: 3em;
-	right: 3em;
-	background-color: #730099;
-	color: #fff;
-	border:none;
-	border-radius: 100%;
-	padding: 1em;
-	text-transform: uppercase;
-	cursor: pointer;
-	font-weight: 700;
-	box-shadow: 0 0 2em 0 rgba(0, 0, 0, .25);
-	transition: all .3s ease-in-out;
-	display: inline-block;
-	opacity: 0;
-	text-decoration: none;
-	font-size: .75em;
-}
-#back-to-top:hover{
-	background-color: #9816f4;
-}
-#back-to-top.visible{
-	opacity: 1;
-}
-#user-profile{
-	/*background:url('../img/signup-banner.jpg') no-repeat center center;*/
-	height: 70%;
-	padding-top: 5%;
-	margin-top:0%;
-	width: 100%;
-}
-.user-profile-wrapper{
-	margin-bottom: 25% !important;
-}
-#user-profile h3{
-	text-align: center;
-	text-transform: uppercase;
-	font-family: "Montserrat";
-}
-p.meetup-content{
-	width: 80%;
-	margin:auto;
-	padding: 1%;
-	font-size: 18px;
-	text-align: center;
-    font-family: 'Open Sans', sans-serif;
-
-}
-#user-profile .user-profile-wrapper{
-	width: 90%;
-	margin:auto;
-}
-.user-profile-wrapper .row{
-	width: 38%;
-	text-align: center;
-	padding-left: .5%;
-	padding-right: 2%;
-	margin-left: 5%;
-	margin-right: 2%;
-	padding-top: 2%;
-	padding-bottom: 5%;
-	transition: all 0.3s ease 0s;
-	background:;
-	border: 2px solid #f7f7f7;
-	-webkit-box-shadow: 0px 0px 5px 1px #f7f7f7;
-	-moz-box-shadow: 0px 0px 5px 1px #f7f7f7;
-	-o-box-shadow: 0px 0px 5px 1px #f7f7f7;
-	-ms-box-shadow: 0px 0px 5px 1px #f7f7f7;
-    box-shadow: 0px 0px 5px 1px #f7f7f7;
-    z-index: 999;
-	float: left;
-}
-.user-profile-wrapper .row i {
-	color: #9816f4;
-}
-.user-profile-wrapper .row img{
-	width: 15%;
-}
-.user-profile-wrapper .row:hover i{
-}
-.user-profile-wrapper .row:hover{
-	opacity: .8;
-	-webkit-box-shadow: 0px 0px 5px 1px #f7f7f7;
-	-moz-box-shadow: 0px 0px 5px 1px #f7f7f7;
-	-o-box-shadow: 0px 0px 5px 1px #f7f7f7;
-	-ms-box-shadow: 0px 0px 5px 1px #f7f7f7;
-    box-shadow: 0px 0px 5px 1px #f7f7f7;
-}
-.user-profile-wrapper .row:hover a{
-	color: inherit;
-}
-.user-profile-wrapper .row:before{
-	content: "";
-	transition: all 0.3s ease 0s;
-}
-.user-profile-wrapper .row:hover:before{
-	top: 0;
-	right: 0;
-}
-.user-profile-wrapper .row a{
-	text-decoration: none;
-	color: #000;
-	font-weight: 600;
-	text-transform: uppercase;
-	display: inline-block;
-}
-.user-profile-wrapper .row p {
-	text-align: center;
-}
-.edit-profile{
-	position: absolute;
-	right: 3em;
-}
-.edit-profile a{
-	text-decoration: none;
-	color: #fff;
-	font-weight: 600;
-	text-transform: uppercase;
-	border: 2px solid #fff;
-	display: inline-block;
-	padding: 25% !important;
-	text-align: center;
-	border-radius: 50%;
-	margin-top: 15px;
-	background: #730099;
-}
-
-#footer-bottom-profile{
-	height: auto;
-	margin: auto;
-	margin-top: 16%;
-	background: #730099;
-	padding: 2px;
-}
-#footer-bottom-profile p{
-	font-family: "Montserrat";
-	font-size: 16px;
-	text-align: center;
-	color: #fff;
-}
-#footer-bottom-profile p a{
-	color: #fff;
-}
-
-/*Questioners page start here*/
-
-#questioner-questions-wrapper{
-	width: 80%;
-	margin: auto;
-	margin-bottom: 15%;
-}
-#questioner-questions-wrapper .specific-meetup{
-	margin: auto;
-	margin-bottom: 5%;
-	padding: 2%;
-	text-align: center;
-	transition: all 0.3s ease 0s;
-	border: 2px solid #f7f7f7;
-	-webkit-box-shadow: 0px 0px 5px 1px #f7f7f7;
-	-moz-box-shadow: 0px 0px 5px 1px #f7f7f7;
-	-o-box-shadow: 0px 0px 5px 1px #f7f7f7;
-	-ms-box-shadow: 0px 0px 5px 1px #f7f7f7;
-    box-shadow: 0px 0px 5px 1px #f7f7f7;
-    z-index: 999;
-}
-#questioner-questions-wrapper .specific-meetup-questions{
-	margin: auto;
-	margin-bottom: 5%;
-	padding: 1%;
-	text-align: center;
-	transition: all 0.3s ease 0s;
-	border: 2px solid #f7f7f7;
-	-webkit-box-shadow: 0px 0px 5px 1px #f7f7f7;
-	-moz-box-shadow: 0px 0px 5px 1px #f7f7f7;
-	-o-box-shadow: 0px 0px 5px 1px #f7f7f7;
-	-ms-box-shadow: 0px 0px 5px 1px #f7f7f7;
-    box-shadow: 0px 0px 5px 1px #f7f7f7;
-    z-index: 999;
-}
-.specific-meetup-questions h4 {
-	margin-left: 1% !important;
-}
-.specific-meetup-questions i {
-	cursor: pointer;
-}
-#questioner-questions-wrapper .specific-meetup-questions .questioner-username{
-	color: #730099;
-}
-#questioner-questions-wrapper .specific-meetup-questions h4{
-	width: 80%;
-	margin: auto;
-	font-weight: lighter;
-	font-size: 14px;
-	line-height: 20px;
-	text-align: left;
-	padding-bottom: 3%;
-}
-.post-question{
-	padding-left: 10%;
-}
-#create {
-	margin-top: 2%;
-	background: #9816f4;
-	border: none;
-	padding: 1%;
-	color: #fff;
-	width: 10%;
-	cursor: pointer;
-}
-
-/*#questioner-questions-wrapper section p{
-	display: none;
-	text-align: center;
-
-}
-#questioner-questions-wrapper section a{
-	text-decoration: none;
-	text-align: center;
-}
-#questioner-questions-wrapper section:target p{
-	display: block;
-}*/
-.questioner-post-wrapper{
-	margin-left: 12%;
-	margin-top: -10%;
-	margin-bottom: 10%;
-
-}
-.questioner-post-wrapper-comment{
-
-}
-.questioner-post-wrapper button.accordion{
-	background-color: #730099;
-	color: #fff;
-	border:none;
-	border-radius: 100%;
-	text-transform: uppercase;
-	cursor: pointer;
-	font-weight: 700;
-	box-shadow: 0 0 2em 0 rgba(0, 0, 0, .25);
-	transition: all .3s ease-in-out;
-	display: inline-block;
-	cursor: pointer;
-	padding:5px;
-	transition: .4s;
-}
-.specific-meetup-questions textarea {
-	width: 100%;
-	  padding: 0px 2px;
-	  max-height: 10% !important;
-	  box-sizing: border-box;
-	  border: 2px solid #ccc;
-	  border-radius: 4px;
-	  background-color: #f9f9f9;
-	  resize: none;
-	  margin-left: 0%;
-}
-
-.questioner-post-wrapper textarea{
-	  width: 91%;
-	  padding: 12px 20px;
-	  max-height: 30%;
-	  box-sizing: border-box;
-	  border: 2px solid #ccc;
-	  border-radius: 4px;
-	  background-color: #f9f9f9;
-	  resize: none;
-	  margin-left: -2%;
-}
-.questioner-post-wrapper-comment span.accordion{
-	background-color: #000;
-	color: #fff;
-	border:none;
-	border-radius: 25%;
-	text-transform: uppercase;
-	cursor: pointer;
-	font-weight: 700;
-	box-shadow: 0 0 2em 0 rgba(0, 0, 0, .25);
-	transition: all .3s ease-in-out;
-	display: inline-block;
-	cursor: pointer;
-	padding:5px;
-	transition: .4s;
-}
-.questioner-post-wrapper button:focus{
-	outline: none;
-}
-.questioner-post-wrapper button.accordion.active, button.accordion:hover{
-	background: #9816f4;
-}
-div.questioner-form-field{
-	padding: 0 18px;
-	color: #000;
-	max-height: 0;
+	align-items: center;
+	justify-content: center;
+	flex-wrap: wrap;
+  }
+  .wrap{
+	width: 500px;
 	overflow: hidden;
-	width: 80%;
-	transition: max-height .2s ease-in-out;
-}
-.questioner-form-field .question-box{
-	margin-top: 5%;
-	margin-left: 0%;
-	width: 100%;
-	padding:0px;
-	/*transform: translate(-50%, -50%);*/
-	text-align: center;
-}
-.questioner-form-field .question-box input[type="text"]{
-	border: 0;
-	background-color: #f8f8f8;
-	display: block;
-	margin: 20px auto;
-	text-align: center;
-	border: 2px solid #ccc;
-	padding: 14px 10px;
-	width: 80%;
-	outline: none;
-	color: #000;
-	border-radius: 24px;
-	transition: 0.25s;
-}
-.questioner-form-field .question-box input[type="text"]:focus{
-	width: 85%;
-}
-.questioner-form-field .question-box input[type="submit"]{
-	background: #9816f4;
-	margin-top: 3%;
-	margin-bottom: 0%;
-	padding: 2%;
-	color: #fff;
-    border: none;
+	margin-top: 100px;
+	margin-bottom: 10px;
+	padding: 20px;
+	background: #fff;
+	border: 1px solid silver;
+	border-radius: 5px;
 	font-size: 14px;
-	border-radius: 40px;
-	width: 18%;
+  }
+  
+  .wrap .btn-login:hover{
+	background: #e67e22;
 	cursor: pointer;
-	-webkit-transition: all 1s;
-	transition: all 1s;
-	max-height: inherit;
-}
-.questioner-form-field .question-box textarea {
-  width: 100%;
-  padding: 12px 20px;
-  max-height: 30%;
-  box-sizing: border-box;
-  border: 2px solid #ccc;
-  border-radius: 4px;
-  background-color: #f8f8f8;
-  resize: none;
-}
-
-
-
-
-@media(max-width: 1300px){
-	#footer-bottom-profile{
-		margin-top: 17% !important;
-		padding: 2px;
-	}
-}
-@media(max-width: 1280px){
-	#footer-bottom-profile{
-		margin-top: 14% !important;
-		padding: 2px;
-	}
-}
-@media(max-width: 1200px){
-	.wrapper-left{
-		left: 10%;
-	}
-	.wrapper-left h1{
-		font-size: 24px;
-	}
-}
-@media(max-width: 1100px){
-	.banner-split.right h1{
-		font-size: 2em;
-	}
-	.login-section{
-		width: 70%;
-	}
-	.login-section button{
-		margin: 20%;
-		width: 50%;
-	}
-	#footer-bottom-profile{
-		height: auto;
-		margin: auto;
-		margin-top: 23% !important;
-		padding: 2px;
-	}
-
-}
-@media(max-width: 720px){
-	.banner-split.right h1{
-		font-size: 1.5em;
-	}
-	.banner-split.right p{
-		top: 40%;
-	}
-	.login-section{
-		width: 70%;
-	}
-	.login-section button{
-		margin: 20%;
-		width: 50%;
-	}
-	.login-section p{
-		font-size: 14px;
-	}
-	.login-section p a {
-		font-size: 14px;
-	}
-
-}
-
-@media(max-width: 1100px){
-	nav{
-		width: 80%;
-	}
-	nav>ul>li>a{
-		color: #fff;
-		font-size: 13px;
-		text-decoration: none;
-	}
-	.wrapper-left{
-		width: 80%;
-		left: 10%;
-	}
-	.wrapper-left h1{
-		font-size: 24px;
-	}
-	.section-meetup-wrapper .row{
-		width: 40%;
-		padding-bottom: 5%;
-	}
-	.all-section-meetup-wrapper .row{
-		width: 40%;
-		padding-bottom: 5%;
-	}
-}
-@media(max-width: 900px){
-	.logo{
-		font-size: 30px;
-		margin-left: -10%;
-	}
-	nav ul{
-		width: 100%;
-		margin-right: -15%;
-	}
-	nav ul li a{
-		font-size: 12px;
-	}
-	nav ul li.active a{
-		color: #fff;
-		margin-top: -10%;
-		font-weight: 600;
-		font-size: 12px;
-		padding: 8px 25px;
-		border-radius: 50px;
-	}
-	.how-questioner-works-wrapper .row{
-		width: 80%;
-		margin-bottom: 3%;
-	}
-}
-@media(max-width: 780px){
-	.logo{
-		font-size: 30px;
-		margin-left: -15%;
-	}
-	nav ul{
-		width: 100%;
-		margin-right: -15%;
-	}
-	nav ul li a{
-		font-size: 12px;
-	}
-	nav ul li.active a{
-		margin-top: -10%;
-		font-weight: 600;
-		font-size: 12px;
-		padding: 5px 15px;
-		border-radius: 50px;
-	}
-	.wrapper-left{
-		top: 50%;
-		width: 80%;
-		left: 12%;
-	}
-	.wrapper-left h1{
-		font-size: 20px;
-	}
-	.wrapper-left p{
-		font-size: 14px;
-	}
-	.social-icons{
-		width: 55%;
-	}
-}
-@media(max-width: 680px){
-	.logo{
-		margin-left: 23%;
-		font-size: 40px;
-	}
-	nav{
-		padding: 0px 15%;
-	}
-	nav>ul>li{
-		width: 100%;
-		margin-left: -25%;
-		text-align: center;
-	}
-	nav>ul>li>a{
-	font-size: 14px;
-	}
-	nav ul li.active a{
-	margin-top: -10%;
-	font-weight: 600;
-	font-size: 12px;
-	padding: 10px 30px;
-	border-radius: 50px;
-	}
-	.wrapper-left{
-		top: 70%;
-		width: 70%;
-		left: 15%;
-	}
-	.wrapper-left a{
-		font-size: 12px;
-		padding:2%;
-		margin-top: -2%;
-	}
-	.wrapper-left h1{
-		font-size: 18px;
-	}
-	.wrapper-left p{
-		font-size: 13px;
-	}
-	.section-wrapper .row{
-		width: 90%;
-	}
-	.social-icons{
-		top: 50%;
-		left: 20px;
-		width: 55%;
-	}
-}
-@media(max-width: 640px){
-	.logo{
-		margin-left: 25%;
-		font-size: 40px;
-	}
-	nav{
-		padding: 0px 15%;
-	}
-	nav>ul>li{
-		width: 100%;
-		margin-left: -25%;
-		text-align: center;
-	}
-	nav>ul>li>a{
-	font-size: 14px;
-	}
-	nav ul li.active a{
+  }
+  
+  .wrap input, .wrap textarea{
+	width: 96%;
+	height: 35px;
+	margin-bottom: 10px;
+	border-radius: 5px;
+	border: 1px solid silver;
+	padding: 5px;
+  }
+  .wrap select{
+	width: 98%;
+	height: 45px;
+	margin-bottom: 10px;
+	border-radius: 5px;
+	border: 1px solid silver;
+	padding: 5px;
+  }
+  
+  .wrap .btn-login{
+	width: 100%;
+	height: 35px;
+	background-color: #cf6d17;
 	color: #fff;
-	margin-top: -10%;
-	font-weight: 600;
-	font-size: 12px;
-	padding: 10px 30px;
-	border-radius: 50px;
+	border-radius: 3px;
+	border:0;
+	padding: 5px;
+	font-size: 18px;
+  }
+  .require {
+	float: right;
+	margin-bottom: 10px;
+  }
+  .star{
+	color: #f1171e
+  }
+  .send{
+	margin-top: 20px;
+  }
+  .latt{
+	display: grid;
+	grid-template-columns: auto 1fr auto 1fr;
+  }
+  .latt input{
+	width: auto;
+  }
+  
+  /****** MEDIA-QUERRIES ******/
+  @media(max-width: 850px){
+	.header-nav{
+		order: 1;
 	}
-	.wrapper-left{
-		top: 70%;
-		width: 80%;
-		left: 15%;
+  
+  }
+  
+  @media(max-width: 500px){
+	.toggleNav {
+		display: block;
+	  }
+	  .header-nav ul{
+		flex-direction: row;
+		margin-left: -20px;
+	  }
+  
+	  .header-nav li{
+		flex: 1 1 100%;
 	}
-	.wrapper-left h1{
-		font-size: 20px;
-	}
-	.wrapper-left p{
-		font-size: 14px;
-	}
-	.social-icons{
-		top: 50%;
-		left: 20px;
-		width: 65%;
-	}
-
-}
-@media(max-width: 620px){
-	.logo{
-		margin-left: 20%;
-		font-size: 40px;
-	}
-	nav{
-		padding: 0px 15%;
-	}
-	nav>ul>li{
-		width: 100%;
-		margin-left: -25%;
-		text-align: center;
-	}
-	nav>ul>li>a{
-	font-size: 14px;
-	}
-	nav ul li.active a{
-	color: #fff;
-	margin-top: -10%;
-	font-weight: 600;
-	font-size: 12px;
-	padding: 10px 30px;
-	border-radius: 50px;
-	}
-	.wrapper-left{
-		top: 70%;
-		width: 80%;
-		left: 15%;
-	}
-	.wrapper-left h1{
-		font-size: 16px;
-	}
-	.wrapper-left a{
-		font-size: 13px;
-		padding:2%;
-		margin-top: -2%;
-	}
-	.wrapper-left p{
-		font-size: 11.5px;
-	}
-	.banner-split.right{
-		visibility: hidden;
-	}
-	.banner-split.left{
-		width: 100%;
-		margin-left: -5%;
-	}
-	.login-section input[type="text"], input[type="email"], input[type="password"]{
-		padding: 5%;
-	}
-	.login-section button{
-		margin-top: 10%;
-	}
-	.login-section p{
-		text-align: center;
-	}
-	.social-icons{
-		top: 50%;
-		left: 20px;
-		width: 80%;
-	}
-	#meetup-section h1{
-		font-size: 22px;
-	}
-	#how-questioner-works h1{
-		font-size: 22px;
-	}
-	#questioner-services h1{
-		font-size: 22px;
-	}
-	.section-wrapper .row{
-		width: 90%;
-	}
-	p.meetup-content{
-		width: 90% !important;
-		font-size: 14px !important;
-	}
-	#footer-main .footer-social-icons ul li{
-		font-size: 15px; 
-	}
-	#footer-main .footer-menu ul li a{
-		font-size: 10px;
-	}
-}
-@media(max-width: 480px){
-	.logo{
-		font-size: 35px;
-	}
-	nav{
-		padding: 0px 15%;
-	}
-	nav>ul>li{
-		width: 100%;
-		margin-left: -25%;
-		text-align: center;
-	}
-	nav>ul>li>a{
-	font-size: 14px;
-	}
-	nav ul li.active a{
-	color: #fff;
-	margin-top: -10%;
-	font-weight: 600;
-	font-size: 12px;
-	padding: 10px 30px;
-	border-radius: 50px;
-	}
-	.title{
-		font-size: 14px;
-	}
-	#questioner-services h1, #meetup-section h1, #how-questioner-works h1{
-		font-size: 16px;
-	}
-	.section-meetup-wrapper .row h4{
-		font-size: 12px;
-	}
-	.section-meetup-wrapper .row a {
-		visibility:hidden;
-	}
-	#footer-main .footer-social-icons{
-		visibility: visible;
-	}
-	.all-section-meetup-wrapper .row{
-		width: 80%;
-		padding-bottom: 5%;
-	}
-	.wrapper-left{
-		margin-top: 10%;
-		width: 90%;
-		left: 8%;
-	}
-	.wrapper-left h1{
-		font-size: 16px;
-	}
-	.wrapper-left p{
-		font-size: 12px;
-		/*visibility: hidden;*/
-	}
-	.wrapper-left a{
-		visibility: hidden;
-	}
-	.background{
-	}
-	.social-icons{
-		visibility: hidden;
-	}
-	.wrapper-right{
-		visibility: hidden;
-	}
-	.banner-split.right{
-		visibility: hidden;
-	}
-	.banner-split.left{
-		width: 100%;
-		margin-left: -5%;
-	}
-	.login-section input[type="text"], input[type="email"], input[type="password"]{
-		padding: 5%;
-	}
-	.login-section p{
-		text-align: center;
-	}
-	.banner-split.right h1{
-		font-size: 1em;
-	}
-	.banner-split.right p{
-		top: 40%;
-		font-size: 12px;
-	}
-	.login-section p{
-		font-size: 10px;
-	}
-	.login-section p a {
-		font-size: 8px;
-	}
-@media(max-width: 360px){
-	.footer-align {
-		margin-left: -6% !important;
-		font-size: 9px !important;
-	}
-	.logo{
-		font-size: 35px;
-		margin-left: 5%;
-	}
-	nav{
-		padding: 0px 15%;
-	}
-	nav>ul>li{
-		width: 100%;
-		margin-left: -25%;
-		text-align: center;
-	}
-	nav>ul>li>a{
-	font-size: 14px;
-	}
-	nav ul li.active a{
-	color: #fff;
-	margin-top: -10%;
-	font-weight: 600;
-	font-size: 12px;
-	padding: 10px 30px;
-	border-radius: 50px;
-	}
-	.title{
-		font-size: 14px;
-	}
-	#questioner-services h1, #meetup-section h1, #how-questioner-works h1{
-		font-size: 16px;
-	}
-	.section-meetup-wrapper .row h4{
-		font-size: 12px;
-	}
-	.section-meetup-wrapper .row a {
-		visibility:hidden;
-	}
-	#footer-main .footer-social-icons{
+  
+	  .header-nav ul {
 		display: none;
+	  }
+		.header-nav ul.open {
+		  display:flex;
+		}
+	.login-form {
+		flex-direction: column;
+	  }
+  
+	.cover {
+		flex-direction: column;
 	}
-	.all-section-meetup-wrapper .row{
-		width: 80%;
-		padding-bottom: 5%;
-	}
-	.wrapper-left{
-		margin-top: 30%;
-		width: 90%;
-		left: 8%;
-	}
-	.wrapper-left h1{
-		font-size: 16px;
-		margin-top: -35%;
-		text-align: center;
-	}
-	.wrapper-left p{
-		font-size: 12px;
-	}
-	.wrapper-left a{
-		visibility: hidden;
-	}
-	.background{
-	}
-	.social-icons{
-		visibility: hidden;
-	}
-	.wrapper-right{
-		visibility: hidden;
-	}
-	.banner-split.right{
-		visibility: hidden;
-	}
-	.banner-split.left{
-		width: 100%;
-		margin-left: -5%;
-	}
-	.login-section input[type="text"], input[type="email"], input[type="password"]{
-		padding: 5%;
-	}
-	.banner-split.right h1{
-		font-size: 1em;
-	}
-	.banner-split.right p{
-		top: 40%;
-		font-size: 12px;
-	}
-	.login-section p{
-		font-size: 10px;
-	}
-	.login-section p a {
-		font-size: 10px;
-	}
+  }
+  
 
+*:focus {outline: none}
+
+/*---------------------------------------------*/
+/* FOOTER */
+/*---------------------------------------------*/
+
+footer {
+    background-color: #333;
+    padding: 50px;
+    font-size: 80%;
+}
+
+.footer-nav {
+    list-style: none;
+    float: left;
+}
+
+.social-links {
+    list-style: none;
+    float: right;
+}
+
+.footer-nav li,
+.social-links li {
+    display: inline-block;
+    margin-right: 20px;
+}
+
+.footer-nav li:last-child,
+.social-links li:last-child {
+    margin: 0;
+}
+
+.footer-nav li a:link,
+.footer-nav li a:visited,
+.social-links li a:link,
+.social-links li a:visited {
+    text-decoration: none;
+    border: 0;
+    color: #888;
+}
+
+.footer-nav li a:hover,
+.footer-nav li a:active {
+    color: #ddd;
+}
+
+.social-links li a:link,
+.social-links li a:visited {
+    font-size: 160%;
+}
+
+.ion-logo-facebook
+.ion-logo-twitter,
+.ion-logo-googleplus,
+.ion-logo-instagram {
+    transition: color 0.2s;
+}
+
+.ion-logo-facebook:hover {
+    color: #3b5998;
+}
+
+.ion-logo-twitter:hover {
+    color: #00aced;
+}
+
+.ion-logo-googleplus:hover {
+    color: #dd4b39;
+}
+
+.ion-logo-instagram:hover {
+    color: #517fa4;
+}
+
+footer p{
+    color: #888;
+    text-align: center;
+    margin-top: 20px;
 }

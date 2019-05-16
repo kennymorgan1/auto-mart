@@ -1,54 +1,89 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
-	<title>Crowd-source questions for a meetu :: Questioner</title>
-	<meta name="viewport" content="width=device-width, initial-scale=1">
-	<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-	<meta name="keywords" content="Crowd-source questions for a meetup. ​Questioner​​ helps the meetup organizer prioritize  questions to be answered. Other users can vote on asked questions and they bubble to the top  or bottom of the log" />
-	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
-	<link href="css/login-signup.css" rel="stylesheet" type="text/css" media="all" />
-	<link href="https://fonts.googleapis.com/css?family=Cookie|Fredoka+One|Montserrat" rel="stylesheet">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <link rel="stylesheet" type="text/css" href="css/normalize.css">
+    <link rel="stylesheet" type="text/css" href="css/grid.css">
+    <link rel="stylesheet" type="text/css" href="css/login-signup.css">    <link rel="stylesheet" type="text/css" href="css/queries.css">
+    <link href="https://fonts.googleapis.com/css?family=Lato:100,300,300i,400" rel="stylesheet">
+    <link href="https://unpkg.com/ionicons@4.5.5/dist/css/ionicons.min.css" rel="stylesheet">
+    <title>AutoMart</title>
 </head>
 <body>
-	<div class="form-container">
-		<div class="banner-split left">
-			<div class="login-section">
-				<h1><i class="fa fa-meetup" aria-hidden="true"></i>Questioner</h1>
-				<form>
-					<div class="signup-input-field">
-						<input type="text" id="userFirstname" name="firstname" placeholder="Firstname" />
-						<br />
-						<span id="firstnameError" class="text-danger"></span>
-					</div>
-					<div class="signup-input-field">
-						<input type="text" id="userLastname"name="lastname" placeholder = "Lastname" />
-						<br />
-						<span id="lastnameError" class="text-danger"></span>
-					</div>
-					<div class="signup-input-field">
-						<input type="email" id="userEmail" name="email" placeholder = "Email" />
-						<br />
-						<span id="emailError" class="text-danger"></span>
-					</div>
-					<div class="signup-input-field">
-						<input type="password" id="userPassword" name="password" placeholder = "password" />
-						<br />
-						<span id="passwordError" class="text-danger"></span>
-					</div>
-					<br />
-					<div class="login-input-submit" id="loginBtn" align="center">
-						<button id="submit">Sign up <i class="fa fa-arrow-right" aria-hidden="true"></i></button>
-					</div>
-				</form>
-				<p class="footer-align">Already have an account ? <a href="login.html"> sign in  <i class="fa fa-arrow-right" aria-hidden="true"></i></a> | <a href="index.html">Goback <i class="fa fa-home" aria-hidden="true"></i></a></p>
+    <header>
+        <nav class="sticky">
+            <div class="row">
+                    <img src="img/logo.png" alt="Omnifood logo" class="logo">    
+                <ul  class="main-nav">
+                    <li><a href="#">Post a car</a></li>
+                    <li><a href="#">Models</a></li>
+                    <li><a href="#">View cars</a></li>
+                    <li><a href="#">Sign In</a></li>
+                </ul>
+                <a class="mobile-nav-icon js-nav-icon" id="toggleNav"><i class="icon ion-md-menu"></i></a>
+            </div>
+        </nav>
+	</header>
+	<section class="signup">
+		<div class="wrap">
+			<h2 class='center'> Signup Here</h2>
+			<div>
+				<p class="require"><span class="star">*</span> Required</p><br>
 			</div>
+			<form class="send">
+				<div>
+					<label>First Name<span class="star">*</span></label><br>
+					<input type="text" placeholder="e.g Kingsley">
+				</div>
+				<div>
+					<label>Last Name<span class="star">*</span></label><br>
+					<input type="text" placeholder="e.g Adebayo" required>
+				</div>
+				<div>
+					<label>Phone Number</label><br>
+					<input type="text" placeholder="e.g 08000000000">
+				</div>
+				<div>
+					<label>E-mail<span class="star">*</span></label><br>
+					<input type="email" placeholder="e.g youname@yahoo.com" required>
+				</div>
+				<div>
+					<label>Password<span class="star">*</span></label><br>
+					<input type="password" placeholder="choose a strong password" required>
+				</div>
+				<button class="btn-login" type="submit">Sign up</button>
+			</form>
 		</div>
-		<div class ="banner-split right">
-			<h1>join our community</h1>
-			<p>Crowd-source questions for a meetup. ​Questioner​​ helps the meetup organizer prioritize  questions to be answered. Other users can vote on asked questions and they bubble to the top  or bottom of the log. </p>
-		</div>
-	</div>
-	<!-- Keep javascript on hover effect for reference purpose -->
-	<!-- <script type="text/javascript" src="js/main.js"></script> -->
+</section>
+
+    <footer>
+        <div class="row">
+            <div class="col span-1-of-2">
+                <ul class="footer-nav">
+                    <li><a href="#">About us</a></li>
+                    <li><a href="#">Blog</a></li>
+                    <li><a href="#">Press</a></li>
+                    <li><a href="#">iOS App</a></li>
+                    <li><a href="#">Android App</a></li>
+                </ul>
+            </div>
+            <div class="col span-1-of-2">
+                <ul class="social-links">
+                    <li><a href="#"><i class="icon ion-logo-facebook"></i></a></li>
+                    <li><a href="#"><i class="icon ion-logo-twitter"></i></a></li>
+                    <li><a href="#"><i class="icon ion-logo-googleplus"></i></a></li>
+                    <li><a href="#"><i class="icon ion-logo-instagram"></i></a></li>
+                </ul>
+            </div>
+        </div>
+        <div class="row">
+            <p>
+                copyright &copy; 2015 by Omnifood. All rights reserved.
+            </p>
+        </div>
+    </footer>
+    <script src="js/main.js"></script>
 </body>
 </html>
