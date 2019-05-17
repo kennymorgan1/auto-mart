@@ -66,6 +66,10 @@
         display: none;
     }
 
+    .preview {
+        display: none;
+    }
+
     .main-nav li{
         display: block
     }

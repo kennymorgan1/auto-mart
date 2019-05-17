@@ -287,8 +287,11 @@ input[type=submit] {
 	background: #fff;
 	border: 1px solid silver;
 	border-radius: 5px;
-	font-size: 14px;
-  }
+	-webkit-border-radius: 5px;
+	-moz-border-radius: 5px;
+	-ms-border-radius: 5px;
+	-o-border-radius: 5px;
+}
   
   .wrap .btn-login:hover{
 	background: #e67e22;
