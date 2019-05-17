@@ -1,0 +1,148 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <link rel="stylesheet" type="text/css" href="css/normalize.css">
+    <link rel="stylesheet" type="text/css" href="css/grid.css">
+    <link rel="stylesheet" type="text/css" href="css/postcar.css">    
+    <link rel="stylesheet" type="text/css" href="css/queries.css">
+    <link href="https://fonts.googleapis.com/css?family=Lato:100,300,300i,400" rel="stylesheet">
+    <link href="https://unpkg.com/ionicons@4.5.5/dist/css/ionicons.min.css" rel="stylesheet">
+    <title>AutoMart</title>
+</head>
+<body>
+    <header>
+        <nav class="sticky">
+            <div class="row">
+                    <a href="index.html"><img src="img/logo.png" alt="Omnifood logo" class="logo"></a>   
+                <ul  class="main-nav">
+                    <li><a class="active" href="#">Post a car</a></li>
+                    <li><a href="#">Models</a></li>
+                    <li><a href="viewcars.html">View cars</a></li>
+                    <li><a href="#">Sign In</a></li>
+                </ul>
+                <a class="mobile-nav-icon js-nav-icon" id="toggleNav"><i class="icon ion-md-menu"></i></a>
+            </div>
+        </nav>
+	</header>
+    <section class="section-view car-form">
+        <div class="row post-cars">
+            <div class="col span-1-of-2">
+                <form method="POST" action="#" class="contact-form">
+                    <div class="row">
+                        <div class="col span-1-of-3">
+                            <label for="manufacturer">Manufacturer</label>
+                        </div>
+                        <div class="col span-2-of-3">
+                            <input type="text" manufacturer="manufacturer" id="manufacturer" placeholder="car manufacturer" required>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col span-1-of-3">
+                            <label for=model>Model</label>
+                        </div>
+                        <div class="col span-2-of-3">
+                            <input type="text" name="model" id="model" placeholder="car model" required>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col span-1-of-3">
+                            <label for=price>Price</label>
+                        </div>
+                        <div class="col span-2-of-3">
+                            <input type="number" min="0" name="price" id="price" placeholder="car price" required>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col span-1-of-3">
+                            <label for="status">State</label>
+                        </div>
+                        <div class="col span-2-of-3">
+                            <select name="state" id="state">
+                                <option value="new" selected>New</option>
+                                <option value="used">Used</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col span-1-of-3">
+                            <label for="status">Status</label>
+                        </div>
+                        <div class="col span-2-of-3">
+                            <select name="status" id="status">
+                                <option value="available" selected>Available</option>
+                                <option value="sold">Sold</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col span-1-of-3">
+                            <label for="model">Model</label>
+                        </div>
+                        <div class="col span-2-of-3">
+                            <select name="model" id="model">
+                                <option value="car" selected>Car</option>
+                                <option value="truck">Truck</option>
+                                <option value="trailer">Trailer</option>
+                                <option value="van">Van</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col span-1-of-3">
+                            <label for="image">Image</label>
+                        </div>
+                        <div class="col span-2-of-3">
+                            <input type="file" name="image" id="image" accept="image/*">
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col span-1-of-3">
+                            <label>&nbsp</label>
+                        </div>
+                        <div class="col span-2-of-3">
+                            <input type="submit" value="Post it"> 
+                        </div>
+                    </div>
+                </form>
+            </div>
+            <div class="col span-1-of-2">
+                <div class="preview">
+                    <div class="hero-test-box">
+                        <h1>Upload a car. <br> Give a brief description of the car</h1>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    <footer>
+        <div class="row">
+            <div class="col span-1-of-2">
+                <ul class="footer-nav">
+                    <li><a href="#">About us</a></li>
+                    <li><a href="#">Blog</a></li>
+                    <li><a href="#">Press</a></li>
+                    <li><a href="#">iOS App</a></li>
+                    <li><a href="#">Android App</a></li>
+                </ul>
+            </div>
+            <div class="col span-1-of-2">
+                <ul class="social-links">
+                    <li><a href="#"><i class="icon ion-logo-facebook"></i></a></li>
+                    <li><a href="#"><i class="icon ion-logo-twitter"></i></a></li>
+                    <li><a href="#"><i class="icon ion-logo-googleplus"></i></a></li>
+                    <li><a href="#"><i class="icon ion-logo-instagram"></i></a></li>
+                </ul>
+            </div>
+        </div>
+        <div class="row">
+            <p>
+                copyright &copy; 2015 by Omnifood. All rights reserved.
+            </p>
+        </div>
+    </footer>
+    <script src="js/main.js"></script>
+</body>
+</html>
