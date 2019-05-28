@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <link rel="stylesheet" type="text/css" href="css/normalize.css">
+    <link rel="stylesheet" type="text/css" href="css/grid.css">
+    <link rel="stylesheet" type="text/css" href="css/login-signup.css">    <link rel="stylesheet" type="text/css" href="css/queries.css">
+    <link href="https://fonts.googleapis.com/css?family=Lato:100,300,300i,400" rel="stylesheet">
+    <link href="https://unpkg.com/ionicons@4.5.5/dist/css/ionicons.min.css" rel="stylesheet">
+    <title>AutoMart</title>
+</head>
+<body>
+    <header>
+        <nav class="sticky">
+            <div class="row">
+                <a href="index.html"><img src="img/logo.png" alt="AutoMart logo" class="logo"></a>    
+                <ul  class="main-nav">
+                    <li><a href="login.html">Sign In</a></li>
+                </ul>
+                <a class="mobile-nav-icon js-nav-icon" id="toggleNav"><i class="icon ion-md-menu"></i></a>
+            </div>
+        </nav>
+	</header>
+	<section class="signup">
+		<div class="wrap">
+			<h2 class='center'> Signup Here</h2>
+			<div>
+				<p class="require"><span class="star">*</span> Required</p><br>
+			</div>
+			<form class="send">
+				<div>
+					<label>First Name<span class="star">*</span></label><br>
+					<input type="text" placeholder="e.g Kingsley">
+				</div>
+				<div>
+					<label>Last Name<span class="star">*</span></label><br>
+					<input type="text" placeholder="e.g Adebayo" required>
+				</div>
+				<div>
+					<label>Phone Number</label><br>
+					<input type="text" placeholder="e.g 08000000000">
+				</div>
+				<div>
+					<label>E-mail<span class="star">*</span></label><br>
+					<input type="email" placeholder="e.g youname@yahoo.com" required>
+				</div>
+				<div>
+					<label>Password<span class="star">*</span></label><br>
+					<input type="password" placeholder="choose a strong password" required>
+				</div>
+				<button class="btn-login" type="submit">Sign up</button>
+            </form>
+            <p class="footer-align">Already have an account ? <a href="login.html"> sign in  <i class="fa fa-arrow-right" aria-hidden="true"></i></a> | <a href="index.html">Goback <i class="fa fa-home" aria-hidden="true"></i></a></p>
+		</div>
+</section>
+
+    <footer>
+        <div class="row">
+            <div class="col span-1-of-2">
+                <ul class="footer-nav">
+                    <li><a href="#">About us</a></li>
+                    <li><a href="#">Blog</a></li>
+                    <li><a href="#">Press</a></li>
+                    <li><a href="#">iOS App</a></li>
+                    <li><a href="#">Android App</a></li>
+                </ul>
+            </div>
+            <div class="col span-1-of-2">
+                <ul class="social-links">
+                    <li><a href="#"><i class="icon ion-logo-facebook"></i></a></li>
+                    <li><a href="#"><i class="icon ion-logo-twitter"></i></a></li>
+                    <li><a href="#"><i class="icon ion-logo-googleplus"></i></a></li>
+                    <li><a href="#"><i class="icon ion-logo-instagram"></i></a></li>
+                </ul>
+            </div>
+        </div>
+        <div class="row">
+            <p>
+                copyright &copy; 2015 by AutoMart. All rights reserved.
+            </p>
+        </div>
+    </footer>
+    <script src="js/main.js"></script>
+</body>
+</html>

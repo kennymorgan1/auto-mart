@@ -1,0 +1,60 @@
+{
+  "name": "auto-mart",
+  "version": "1.0.0",
+  "description": "Automart car sales",
+  "main": "index.js",
+  "dependencies": {
+    "babel-core": "^6.26.3",
+    "babel-loader": "^8.0.4",
+    "babel-plugin-istanbul": "^5.1.0",
+    "babel-polyfill": "^6.26.0",
+    "babel-preset-latest": "^6.24.1",
+    "babel-register": "^6.26.0",
+    "body-parser": "^1.18.3",
+    "chai": "^4.2.0",
+    "chai-http": "^4.2.0",
+    "chalk": "^2.4.2",
+    "coveralls": "^3.0.2",
+    "cross-env": "^5.2.0",
+    "dotenv": "^6.2.0",
+    "eslint": "^5.9.0",
+    "eslint-config-airbnb-base": "^13.1.0",
+    "eslint-plugin-import": "^2.14.0",
+    "eslint-watch": "^4.0.2",
+    "express": "^4.17.0",
+    "mocha": "^5.2.0",
+    "morgan": "^1.9.1",
+    "nodemon": "^1.19.1",
+    "nyc": "^13.1.0",
+    "pg": "^7.7.1"
+  },
+  "devDependencies": {
+    "babel-cli": "^6.26.0",
+    "babel-eslint": "^10.0.1",
+    "babel-preset-env": "^1.7.0",
+    "chai": "^4.1.2",
+    "chai-http": "^4.0.0",
+    "coveralls": "^3.0.2",
+    "istanbul": "^0.4.5",
+    "mocha": "^5.2.0",
+    "mocha-lcov-reporter": "^1.3.0",
+    "nodemon": "^1.18.2"
+  },
+  "scripts": {
+    "build": "babel --out-dir dist server",
+    "start": "npm run build && node dist/app.js",
+    "dev": "npm run build && nodemon dist/app.js",
+    "lint": "eslint server",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/kennymorgan1/auto-mart.git"
+  },
+  "author": "Kennymorgan",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/kennymorgan1/auto-mart/issues"
+  },
+  "homepage": "https://github.com/kennymorgan1/auto-mart#readme"
+}
