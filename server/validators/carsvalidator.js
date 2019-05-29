@@ -46,4 +46,21 @@ export default class CarValidation {
       next();
     });
   }
+
+  static updateCarPrice(req, res, next) {
+    const schema = Joi.object().keys({
+      price: Joi.number().integer().required()
+        .error(new Error('Invalid price supplied')),
+    });
+
+    Joi.validate(req.body, schema, (error) => {
+      if (error) {
+        return res.status(400).json({
+          status: 400,
+          error: error.message,
+        });
+      }
+      next();
+    });
+  }
 }
