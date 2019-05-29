@@ -1,6 +1,5 @@
 /* eslint-disable camelcase */
 import cars from '../model/carsdata';
-import users from '../model/authdata';
 
 export default class CarsControllers {
   static postCar(req, res) {
@@ -18,7 +17,23 @@ export default class CarsControllers {
       model,
       body_type,
     };
-    users.push(car);
+    cars.push(car);
     return res.status(201).json({ status: 201, data: car });
+  }
+
+  static updateCarStatus(req, res) {
+    const { status } = req.body;
+    // eslint-disable-next-line arrow-body-style
+    const car = cars.find((result) => {
+      return (result.id === parseFloat(req.params.car_id) && (result.owner === req.userData.id));
+    });
+    if (!car) {
+      return res.status(400).json({
+        status: 400,
+        error: 'Invalid car selected',
+      });
+    }
+    car.status = status;
+    return res.status(200).json({ status: 200, data: car });
   }
 }

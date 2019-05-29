@@ -6,6 +6,6 @@ import orderValidation from '../validators/ordervalidator';
 const router = express.Router();
 
 router.post('/', authenticate, orderValidation.purchaseOrder, OrdersController.PurchaseOrder);
-router.patch('/:id/price', authenticate, orderValidation.updateOrderPrice, OrdersController.updateOrderPrice);
+router.patch('/:order_id/price', authenticate, orderValidation.updateOrderPrice, OrdersController.updateOrderPrice);
 
 export default router;

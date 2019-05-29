@@ -1,3 +1,4 @@
+/* eslint-disable consistent-return */
 import Joi from 'joi';
 
 export default class CarValidation {
@@ -18,6 +19,23 @@ export default class CarValidation {
     });
 
     // eslint-disable-next-line consistent-return
+    Joi.validate(req.body, schema, (error) => {
+      if (error) {
+        return res.status(400).json({
+          status: 400,
+          error: error.message,
+        });
+      }
+      next();
+    });
+  }
+
+  static updateCarStatus(req, res, next) {
+    const schema = Joi.object().keys({
+      status: Joi.string().valid('sold', 'available').required()
+        .error(new Error('status uld be valid either sold or available')),
+    });
+
     Joi.validate(req.body, schema, (error) => {
       if (error) {
         return res.status(400).json({

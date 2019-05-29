@@ -1,3 +1,4 @@
+/* eslint-disable array-callback-return */
 /* eslint-disable object-curly-newline */
 /* eslint-disable camelcase */
 import orders from '../model/orderdata';
@@ -23,7 +24,10 @@ export default class OrderController {
 
   static updateOrderPrice(req, res) {
     const { price } = req.body;
-    const order = orders.find(result => result.id === parseFloat(req.params.id));
+    // eslint-disable-next-line arrow-body-style
+    const order = orders.find((result) => {
+      return (result.id === parseFloat(req.params.order_id)) && (result.buyer === req.userData.id);
+    });
     if (!order) {
       return res.status(400).json({
         status: 400,
