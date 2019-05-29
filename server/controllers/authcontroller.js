@@ -9,6 +9,15 @@ dotenv.config();
 const secret = process.env.JWT_KEY;
 const expiresIn = process.env.TOKEN_EXPIRY;
 
+const generateUserToken = (user) => {
+  const dataStoredInToken = {
+    id: user.id,
+    email: user.email,
+  };
+  const token = jwt.sign(dataStoredInToken, secret, { expiresIn });
+  return token;
+};
+
 export default class AuthControllers {
   static createUser(req, res) {
     // eslint-disable-next-line consistent-return
@@ -35,14 +44,38 @@ export default class AuthControllers {
     };
 
     users.push(user);
-    const dataStoredInToken = {
-      id: user.id,
-      email: user.email,
-    };
-    const token = jwt.sign(dataStoredInToken, secret, { expiresIn });
+    const token = generateUserToken(user);
 
     // eslint-disable-next-line object-curly-newline
     const data = { token, id, first_name, last_name, email };
     return res.status(201).json({ status: 201, data });
+  }
+
+  static loginUser(req, res) {
+    const { email, password } = req.body;
+    // const result = users.indexOf(email);
+    const result = users.findIndex(resp => resp.email === email);
+    if (result === -1) {
+      return res.status(401).json({
+        status: 401,
+        error: 'Username or password is incorrect',
+      });
+    }
+    const user = users[result];
+    const isPasswordMatching = bcrypt.compareSync(
+      password, user.password,
+    );
+    if (isPasswordMatching) {
+      const token = generateUserToken(user);
+      const data = {
+        token,
+        id: user.id,
+        first_name: user.first_name,
+        last_name: user.last_name,
+        email,
+      };
+      return res.status(200).json({ status: 200, data });
+    }
+    return res.status(401).json({ status: 401, error: 'Username or password is incorrect' });
   }
 }
