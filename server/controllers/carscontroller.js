@@ -64,4 +64,17 @@ export default class CarsControllers {
     }
     return res.status(200).json({ status: 200, data: car });
   }
+
+  static getUnsoldCars(req, res) {
+    const car = cars.filter((result) => {
+      return result.status === req.query.status;
+    });
+    if (!car) {
+      return res.status(404).json({
+        status: 404,
+        error: 'Car not found',
+      });
+    }
+    return res.status(200).json({ status: 200, data: car });
+  }
 }
