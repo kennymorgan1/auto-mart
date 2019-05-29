@@ -21,6 +21,8 @@ app.get('/', (req, res) => {
 
 app.use('/api/v1/auth', authRoutes);
 
+app.use('*', (req, res) => res.status(404).json({ status: 404, error: 'Page not found' }));
+
 const port = process.env.PORT || 5000;
 
 app.listen(port, () => console.log(chalk.default.yellow.bgBlack.bold(`listening on port ${port}.....`)));
