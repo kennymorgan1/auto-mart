@@ -53,15 +53,14 @@ export default class AuthControllers {
 
   static loginUser(req, res) {
     const { email, password } = req.body;
-    // const result = users.indexOf(email);
-    const result = users.findIndex(resp => resp.email === email);
-    if (result === -1) {
+    const isValidUser = users.findIndex(result => result.email === email);
+    if (isValidUser === -1) {
       return res.status(401).json({
         status: 401,
         error: 'Username or password is incorrect',
       });
     }
-    const user = users[result];
+    const user = users[isValidUser];
     const isPasswordMatching = bcrypt.compareSync(
       password, user.password,
     );

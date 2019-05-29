@@ -4,8 +4,8 @@ import AuthValidation from '../validators/authvalidator';
 
 const router = express.Router();
 
-router.post('/register', AuthValidation.createUser, AuthController.createUser);
+router.post('/signup', AuthValidation.createUser, AuthController.createUser);
 
-router.post('/login', AuthController.loginUser);
+router.post('/signin', AuthController.loginUser);
 
 export default router;

@@ -5,6 +5,7 @@ import dotenv from 'dotenv';
 import chalk from 'chalk';
 import authRoutes from './routes/authrouters';
 import carsRoutes from './routes/carsrouters';
+import orderRoutes from './routes/orderrouters';
 
 const app = express();
 dotenv.config();
@@ -21,7 +22,8 @@ app.get('/', (req, res) => {
 });
 
 app.use('/api/v1/auth', authRoutes);
-app.use('/api/v1/cars', carsRoutes);
+app.use('/api/v1/car', carsRoutes);
+app.use('/api/v1/order', orderRoutes);
 
 app.use('*', (req, res) => res.status(404).json({ status: 404, error: 'Page not found' }));
 
