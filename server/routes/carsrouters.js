@@ -8,5 +8,6 @@ const router = express.Router();
 router.post('/', authenticate, carValidation.postCar, CarsController.postCar);
 router.patch('/:car_id/status', authenticate, carValidation.updateCarStatus, CarsController.updateCarStatus);
 router.patch('/:car_id/price', authenticate, carValidation.updateCarPrice, CarsController.updateCarPrice);
+router.get('/:car_id', authenticate, CarsController.getOneCar);
 
 export default router;

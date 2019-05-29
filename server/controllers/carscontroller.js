@@ -29,8 +29,8 @@ export default class CarsControllers {
       return (result.id === parseFloat(req.params.car_id) && (result.owner === req.userData.id));
     });
     if (!car) {
-      return res.status(400).json({
-        status: 400,
+      return res.status(404).json({
+        status: 404,
         error: 'Invalid car selected',
       });
     }
@@ -45,12 +45,23 @@ export default class CarsControllers {
       return (result.id === parseFloat(req.params.car_id) && (result.owner === req.userData.id));
     });
     if (!car) {
-      return res.status(400).json({
-        status: 400,
+      return res.status(404).json({
+        status: 404,
         error: 'Invalid car selected',
       });
     }
     car.price = price;
+    return res.status(200).json({ status: 200, data: car });
+  }
+
+  static getOneCar(req, res) {
+    const car = cars.find(result => result.id === parseFloat(req.params.car_id));
+    if (!car) {
+      return res.status(404).json({
+        status: 404,
+        error: 'Car not found',
+      });
+    }
     return res.status(200).json({ status: 200, data: car });
   }
 }
