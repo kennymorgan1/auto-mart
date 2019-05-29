@@ -1,3 +1,4 @@
+/* eslint-disable consistent-return */
 import Joi from 'joi';
 
 export default class OrderValidation {
@@ -12,6 +13,23 @@ export default class OrderValidation {
     });
 
     // eslint-disable-next-line consistent-return
+    Joi.validate(req.body, schema, (error) => {
+      if (error) {
+        return res.status(400).json({
+          status: 400,
+          error: error.message,
+        });
+      }
+      next();
+    });
+  }
+
+  static updateOrderPrice(req, res, next) {
+    const schema = Joi.object().keys({
+      price: Joi.number().integer().required()
+        .error(new Error('Invalid price supplied')),
+    });
+
     Joi.validate(req.body, schema, (error) => {
       if (error) {
         return res.status(400).json({
