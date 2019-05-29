@@ -3,6 +3,7 @@ import bodyParser from 'body-parser';
 import morgan from 'morgan';
 import dotenv from 'dotenv';
 import chalk from 'chalk';
+import authRoutes from './routes/router';
 
 const app = express();
 dotenv.config();
@@ -17,6 +18,8 @@ app.get('/', (req, res) => {
     message: 'Welcome to my API',
   });
 });
+
+app.use('/api/v1/auth', authRoutes);
 
 const port = process.env.PORT || 5000;
 
