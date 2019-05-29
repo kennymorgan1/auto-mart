@@ -9,6 +9,7 @@ export default class CarsControllers {
     const car = {
       id: cars.length + 1,
       owner: req.userData.id,
+      email: req.userData.email,
       created_on: new Date(),
       state,
       status: 'available',
