@@ -71,8 +71,6 @@ export default class CarsControllers {
     let { min_price, max_price } = req.query;
     min_price = parseFloat(min_price);
     max_price = parseFloat(max_price);
-    console.log(status, min_price, max_price);
-    console.log(typeof min_price);
 
     if (status && min_price && max_price) {
       car = cars.filter((result) => {
@@ -91,5 +89,20 @@ export default class CarsControllers {
       });
     }
     return res.status(200).json({ status: 200, data: car });
+  }
+
+  static deleteCar(req, res) {
+    if (req.userData.id !== 2) {
+      return res.status(401).json({
+        status: 401,
+        error: 'Not permited to complete this action',
+      });
+    }
+    const index = cars.findIndex(result => result.id === parseFloat(req.params.car_id));
+    cars.splice(index, 1);
+    return res.status(200).json({
+      status: 200,
+      data: 'Car Ad successfully deleted',
+    });
   }
 }
