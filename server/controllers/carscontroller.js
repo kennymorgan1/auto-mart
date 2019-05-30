@@ -66,10 +66,25 @@ export default class CarsControllers {
   }
 
   static getUnsoldCars(req, res) {
-    const car = cars.filter((result) => {
-      return result.status === req.query.status;
-    });
-    if (!car) {
+    let car;
+    const { status } = req.query;
+    let { min_price, max_price } = req.query;
+    min_price = parseFloat(min_price);
+    max_price = parseFloat(max_price);
+    console.log(status, min_price, max_price);
+    console.log(typeof min_price);
+
+    if (status && min_price && max_price) {
+      car = cars.filter((result) => {
+        const { price } = result;
+        return (result.status === status) && (price >= min_price) && (price <= max_price);
+      });
+    } else {
+      car = cars.filter((result) => {
+        return result.status === status;
+      });
+    }
+    if (car.length === 0) {
       return res.status(404).json({
         status: 404,
         error: 'Car not found',
