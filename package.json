@@ -29,7 +29,8 @@
     "morgan": "^1.9.1",
     "nodemon": "^1.19.1",
     "nyc": "^13.1.0",
-    "pg": "^7.7.1"
+    "pg": "^7.7.1",
+    "swagger-ui-express": "^4.0.5"
   },
   "devDependencies": {
     "babel-cli": "^6.26.0",
