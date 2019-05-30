@@ -55,7 +55,6 @@ export default class CarValidation {
 
     Joi.validate(req.body, schema, (error) => {
       if (error) {
-        console.log(error);
         return res.status(400).json({
           status: 400,
           error: error.message,
