@@ -1,0 +1,707 @@
+{
+  "swagger": "2.0",
+  "info": {
+    "description": "This is an Car sales api.  You can find out more about     Swagger at [http://swagger.io](http://swagger.io) or on [irc.freenode.net, #swagger](http://swagger.io/irc/).      For this sample, you can use the api key `special-key` to test the authorization     filters.",
+    "version": "1.0.0",
+    "title": "AutoMart API",
+    "termsOfService": "http://swagger.io/terms/",
+    "contact": {
+      "email": "ezeugwukenneth42@gmail.com"
+    },
+    "license": {
+      "name": "Apache 2.0",
+      "url": "http://www.apache.org/licenses/LICENSE-2.0.html"
+    }
+  },
+  "host": "herokuapp.kennymorgan1.com",
+  "basePath": "/v1",
+  "tags": [
+    {
+      "name": "auth",
+      "description": "Operations about user"
+    },
+    {
+      "name": "car",
+      "description": "Everything about a car"
+    },
+    {
+      "name": "order",
+      "description": "Access to Product orders"
+    }
+  ],
+  "schemes": [
+    "https",
+    "http"
+  ],
+  "paths": {
+    "/user/signup": {
+      "post": {
+        "tags": [
+          "auth"
+        ],
+        "summary": "Create user",
+        "description": "Sign up with automart to use our services.",
+        "operationId": "createUser",
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "in": "body",
+            "name": "body",
+            "description": "Created user object",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/User"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "successful operation",
+            "schema": {
+              "$ref": "#/definitions/UserSuccess"
+            }
+          },
+          "400": {
+            "description": "Invalid signup details"
+          },
+          "409": {
+            "description": "Conflict"
+          }
+        }
+      }
+    },
+    "/user": {
+      "get": {
+        "tags": [
+          "auth"
+        ],
+        "summary": "Logs user into the system",
+        "description": "",
+        "operationId": "loginU",
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "name": "email",
+            "in": "query",
+            "description": "The user email for login",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "password",
+            "in": "query",
+            "description": "The password for login in clear text",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "successful operation",
+            "schema": {
+              "$ref": "#/definitions/UserSuccess"
+            }
+          },
+          "400": {
+            "description": "Invalid username/password supplied"
+          }
+        }
+      }
+    },
+    "/user/signin": {
+      "post": {
+        "tags": [
+          "auth"
+        ],
+        "summary": "login user",
+        "description": "This can only be done by a registered user.",
+        "operationId": "loginUser",
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "in": "body",
+            "name": "body",
+            "description": "user login object",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/UserLogin"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "successful operation",
+            "schema": {
+              "$ref": "#/definitions/UserSuccess"
+            }
+          },
+          "401": {
+            "description": "Invalid user detail supplied"
+          }
+        }
+      }
+    },
+    "/car": {
+      "post": {
+        "tags": [
+          "car"
+        ],
+        "summary": "Add a new car AD",
+        "description": "",
+        "operationId": "postCar",
+        "consumes": [
+          "application/json"
+        ],
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "in": "body",
+            "name": "body",
+            "description": "car object that needs to be advertised",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/Car"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "successful operation",
+            "schema": {
+              "$ref": "#/definitions/CarSuccess"
+            }
+          },
+          "400": {
+            "description": "Invalid car detail supplied"
+          }
+        },
+        "security": [
+          {
+            "petstore_auth": [
+              "write:pets",
+              "read:pets"
+            ]
+          }
+        ]
+      }
+    },
+    "/car/:car_id": {
+      "get": {
+        "tags": [
+          "car"
+        ],
+        "summary": "Get a specific car",
+        "description": "",
+        "operationId": "getOneCar",
+        "produces": [
+          "application/json"
+        ],
+        "responses": {
+          "200": {
+            "description": "successful operation",
+            "schema": {
+              "$ref": "#/definitions/GetCarSuccess"
+            }
+          },
+          "404": {
+            "description": "Pet not found"
+          }
+        },
+        "security": [
+          {
+            "petstore_auth": [
+              "write:pets",
+              "read:pets"
+            ]
+          }
+        ]
+      },
+      "delete": {
+        "tags": [
+          "car"
+        ],
+        "summary": "Deletes a product",
+        "description": "",
+        "operationId": "deleteProduct",
+        "produces": [
+          "application/xml",
+          "application/json"
+        ],
+        "responses": {
+          "200": {
+            "description": "Data was deleted successfullly"
+          },
+          "404": {
+            "description": "Pet not found"
+          }
+        },
+        "security": [
+          {
+            "petstore_auth": [
+              "write:pets",
+              "read:pets"
+            ]
+          }
+        ]
+      }
+    },
+    "/car/:id/price": {
+      "patch": {
+        "tags": [
+          "car"
+        ],
+        "summary": "Update car price",
+        "description": "Update a car by Id",
+        "operationId": "updateCarPRice",
+        "consumes": [
+          "application/json"
+        ],
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "name": "car_id",
+            "in": "path",
+            "description": "ID of car to return",
+            "required": true,
+            "type": "integer"
+          },
+          {
+            "name": "price",
+            "in": "body",
+            "schema": {
+              "$ref": "#/definitions/UpdateCarPrice"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "successful operation",
+            "schema": {
+              "$ref": "#/definitions/GetCarSuccess"
+            }
+          },
+          "400": {
+            "description": "Invalid ID supplied"
+          },
+          "404": {
+            "description": "Product not found"
+          }
+        },
+        "security": [
+          {
+            "api_key": []
+          }
+        ]
+      }
+    },
+    "/car/:id/status": {
+      "patch": {
+        "tags": [
+          "car"
+        ],
+        "summary": "Update car price",
+        "description": "Update a car by Id",
+        "operationId": "updateCarStatus",
+        "consumes": [
+          "application/json"
+        ],
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "name": "car_id",
+            "in": "path",
+            "description": "ID of car to return",
+            "required": true,
+            "type": "integer"
+          },
+          {
+            "name": "price",
+            "in": "body",
+            "schema": {
+              "$ref": "#/definitions/UpdateCarStatus"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "successful operation",
+            "schema": {
+              "$ref": "#/definitions/GetCarSuccess"
+            }
+          },
+          "400": {
+            "description": "Invalid ID supplied"
+          },
+          "404": {
+            "description": "Product not found"
+          }
+        },
+        "security": [
+          {
+            "api_key": []
+          }
+        ]
+      }
+    },
+    "/order": {
+      "post": {
+        "tags": [
+          "order"
+        ],
+        "summary": "place order",
+        "description": "",
+        "operationId": "purchaseOrder",
+        "consumes": [
+          "application/json"
+        ],
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "in": "body",
+            "name": "body",
+            "description": "car object that needs to be advertised",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/Order"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "successful operation",
+            "schema": {
+              "$ref": "#/definitions/OrderSuccess"
+            }
+          },
+          "400": {
+            "description": "Invalid car detail supplied"
+          }
+        },
+        "security": [
+          {
+            "petstore_auth": [
+              "write:pets",
+              "read:pets"
+            ]
+          }
+        ]
+      }
+    },
+    "/order/:id/price": {
+      "patch": {
+        "tags": [
+          "order"
+        ],
+        "summary": "Update car price",
+        "description": "Update a car by Id",
+        "operationId": "updateOrderPrice",
+        "consumes": [
+          "application/json"
+        ],
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "name": "car_id",
+            "in": "path",
+            "description": "ID of car to return",
+            "required": true,
+            "type": "integer"
+          },
+          {
+            "name": "price",
+            "in": "body",
+            "schema": {
+              "$ref": "#/definitions/UpdateCarPrice"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "successful operation",
+            "schema": {
+              "$ref": "#/definitions/OrderSuccess"
+            }
+          },
+          "400": {
+            "description": "Invalid ID supplied"
+          },
+          "404": {
+            "description": "Product not found"
+          }
+        },
+        "security": [
+          {
+            "api_key": []
+          }
+        ]
+      }
+    }
+  },
+  "securityDefinitions": {
+    "petstore_auth": {
+      "type": "oauth2",
+      "authorizationUrl": "http://petstore.swagger.io/oauth/dialog",
+      "flow": "implicit",
+      "scopes": {
+        "write:pets": "modify pets in your account",
+        "read:pets": "read your pets"
+      }
+    },
+    "api_key": {
+      "type": "apiKey",
+      "name": "api_key",
+      "in": "header"
+    }
+  },
+  "definitions": {
+    "Order": {
+      "type": "object",
+      "properties": {
+        "car_id": {
+          "type": "integer",
+          "example": 1
+        },
+        "price": {
+          "type": "integer",
+          "example": 10000
+        },
+        "status": {
+          "type": "array",
+          "xml": {
+            "name": "tag",
+            "wrapped": true
+          },
+          "items": {
+            "type": "string"
+          },
+          "example": [
+            "pending",
+            "accepted",
+            "rejected"
+          ]
+        }
+      },
+      "xml": {
+        "name": "Order"
+      }
+    },
+    "OrderSuccess": {
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "integer",
+          "example": 1
+        },
+        "car_id": {
+          "type": "integer",
+          "example": 1
+        },
+        "created_on": {
+          "type": "string",
+          "example": "12-12-2018"
+        },
+        "status": {
+          "type": "string",
+          "example": "pending"
+        },
+        "price": {
+          "type": "integer",
+          "example": 10000
+        },
+        "price_offered": {
+          "type": "integer",
+          "example": 10000
+        }
+      }
+    },
+    "User": {
+      "type": "object",
+      "properties": {
+        "first_name": {
+          "type": "string",
+          "example": "Kenneth"
+        },
+        "last_name": {
+          "type": "string",
+          "example": "Ezeugwu"
+        },
+        "email": {
+          "type": "string",
+          "example": "ezeugwukenneth@automart.com"
+        },
+        "password": {
+          "type": "string",
+          "example": 12345678
+        },
+        "confirmPassword": {
+          "example": 12345678,
+          "type": "string"
+        },
+        "address": {
+          "type": "string",
+          "example": "11 Okito street"
+        }
+      },
+      "xml": {
+        "name": "User"
+      }
+    },
+    "UserSuccess": {
+      "type": "object",
+      "properties": {
+        "token": {
+          "type": "string",
+          "example": "wrfrfrfrfrgetgetgegegg"
+        },
+        "id": {
+          "type": "integer",
+          "example": 1
+        },
+        "first_name": {
+          "type": "string",
+          "example": "Kenneth"
+        },
+        "last_name": {
+          "type": "string",
+          "example": "Ezeugwu"
+        },
+        "email": {
+          "type": "string",
+          "example": "ezeugwukenneth@automart.com"
+        }
+      }
+    },
+    "UserLogin": {
+      "type": "object",
+      "properties": {
+        "email": {
+          "type": "string",
+          "example": "ezeugwukenneth@automart.com"
+        },
+        "password": {
+          "type": "string",
+          "example": 12345678
+        }
+      }
+    },
+    "Car": {
+      "type": "object",
+      "properties": {
+        "state": {
+          "type": "array",
+          "xml": {
+            "name": "tag",
+            "wrapped": true
+          },
+          "items": {
+            "type": "string"
+          },
+          "example": [
+            "used",
+            "new"
+          ]
+        },
+        "price": {
+          "type": "integer",
+          "example": 5000000
+        },
+        "manufacturer": {
+          "type": "string",
+          "example": "Toyota"
+        },
+        "model": {
+          "type": "string",
+          "example": 2018
+        },
+        "body_type": {
+          "type": "string",
+          "example": "car"
+        }
+      }
+    },
+    "CarSuccess": {
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "integer",
+          "example": 1
+        },
+        "email": {
+          "type": "string",
+          "example": "ezeugwukenneth@automart.com"
+        },
+        "created_on": {
+          "type": "string",
+          "example": "12-12-2018"
+        },
+        "manufacturer": {
+          "type": "string",
+          "example": "Toyota"
+        },
+        "model": {
+          "type": "string",
+          "example": 2018
+        }
+      }
+    },
+    "GetCarSuccess": {
+      "type": "array",
+      "xml": {
+        "name": "tag",
+        "wrapped": true
+      },
+      "items": {
+        "type": "object"
+      },
+      "example": {
+        "id": 1,
+        "owner": 1,
+        "created_on": "12-12-2018",
+        "state": "new",
+        "status": "available",
+        "price": 5000000,
+        "manufacturer": "Toyota",
+        "model": 2018,
+        "body_type": "car"
+      }
+    },
+    "UpdateCarPrice": {
+      "type": "object",
+      "properties": {
+        "price": {
+          "type": "integer",
+          "example": 400000
+        }
+      }
+    },
+    "UpdateCarStatus": {
+      "type": "object",
+      "properties": {
+        "price": {
+          "type": "string",
+          "example": "sold"
+        }
+      }
+    }
+  },
+  "externalDocs": {
+    "description": "Find out more about Swagger",
+    "url": "http://swagger.io"
+  }
+}

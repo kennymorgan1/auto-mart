@@ -3,6 +3,8 @@ import bodyParser from 'body-parser';
 import morgan from 'morgan';
 import dotenv from 'dotenv';
 import chalk from 'chalk';
+import swaggerUi from 'swagger-ui-express';
+import swaggerDocument from '../swagger.json';
 import authRoutes from './routes/authrouters';
 import carsRoutes from './routes/carsrouters';
 import orderRoutes from './routes/orderrouters';
@@ -24,6 +26,8 @@ app.get('/', (req, res) => {
 app.use('/api/v1/auth', authRoutes);
 app.use('/api/v1/car', carsRoutes);
 app.use('/api/v1/order', orderRoutes);
+
+app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerDocument));
 
 app.use('*', (req, res) => res.status(404).json({ status: 404, error: 'Page not found' }));
 
