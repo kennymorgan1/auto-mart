@@ -5,7 +5,7 @@ export default class OrderValidation {
   static purchaseOrder(req, res, next) {
     const schema = Joi.object().keys({
       status: Joi.string().valid('pending', 'accepted', 'rejected').required()
-        .error(new Error('status uld be valid either pending, accepted or rejected')),
+        .error(new Error('status should be valid either pending, accepted or rejected')),
       price: Joi.number().integer().required()
         .error(new Error('Invalid price supplied')),
       car_id: Joi.number().integer().required()

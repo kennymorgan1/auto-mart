@@ -21,14 +21,14 @@ const generateUserToken = (user) => {
 export default class AuthControllers {
   static createUser(req, res) {
     // eslint-disable-next-line consistent-return
-    users.forEach((user) => {
-      if (user.email === req.body.email) {
-        return res.status(409).json({
-          status: 409,
-          error: 'User with email already exist',
-        });
-      }
-    });
+    const validUser = users.find(result => result.email === req.body.email);
+    if (validUser) {
+      return res.status(409).json({
+        status: 409,
+        error: 'User with email already exist',
+      });
+    }
+
     const hashedPassword = bcrypt.hashSync(req.body.password);
     const id = users.length + 1;
     // eslint-disable-next-line object-curly-newline

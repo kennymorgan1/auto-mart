@@ -48,7 +48,7 @@
     "start": "npm run build && node dist/app.js",
     "dev": "npm run build && nodemon dist/app.js",
     "lint": "eslint server",
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "NODE_ENV=test && babel-node node_modules/mocha/bin/_mocha --timeout 20000 server/test/*.js --exit"
   },
   "repository": {
     "type": "git",
