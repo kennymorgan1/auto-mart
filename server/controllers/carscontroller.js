@@ -77,10 +77,12 @@ export default class CarsControllers {
         const { price } = result;
         return (result.status === status) && (price >= min_price) && (price <= max_price);
       });
-    } else {
+    } else if (status) {
       car = cars.filter((result) => {
         return result.status === status;
       });
+    } else {
+      car = cars;
     }
     if (car.length === 0) {
       return res.status(404).json({
