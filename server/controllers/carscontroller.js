@@ -65,7 +65,7 @@ export default class CarsControllers {
     return res.status(200).json({ status: 200, data: car });
   }
 
-  static getUnsoldCars(req, res) {
+  static getCars(req, res) {
     let car;
     const { status } = req.query;
     let { min_price, max_price } = req.query;

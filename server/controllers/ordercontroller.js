@@ -2,6 +2,7 @@
 /* eslint-disable object-curly-newline */
 /* eslint-disable camelcase */
 import orders from '../model/orderdata';
+import cars from '../model/carsdata';
 
 export default class OrderController {
   static PurchaseOrder(req, res) {
@@ -9,10 +10,10 @@ export default class OrderController {
     const id = orders.length + 1;
     const buyer = req.userData.id;
     const created_on = new Date();
-    const car = orders.find(result => result.id === car_id);
+    const car = cars.find(result => result.id === car_id);
     if (!car) {
-      return res.status(400).json({
-        status: 400,
+      return res.status(404).json({
+        status: 404,
         error: 'Invalid car selected',
       });
     }
@@ -29,8 +30,8 @@ export default class OrderController {
       return (result.id === parseFloat(req.params.order_id)) && (result.buyer === req.userData.id);
     });
     if (!order) {
-      return res.status(400).json({
-        status: 400,
+      return res.status(404).json({
+        status: 404,
         error: 'Invalid order selected',
       });
     }
