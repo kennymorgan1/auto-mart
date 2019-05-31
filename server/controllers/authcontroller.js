@@ -1,6 +1,7 @@
+
 /* eslint-disable camelcase */
 import jwt from 'jsonwebtoken';
-import bcrypt from 'bcrypt-nodejs';
+import bcrypt from 'bcryptjs';
 import dotenv from 'dotenv';
 import users from '../model/authdata';
 

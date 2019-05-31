@@ -3,6 +3,7 @@ import bodyParser from 'body-parser';
 import morgan from 'morgan';
 import dotenv from 'dotenv';
 import chalk from 'chalk';
+import 'babel-polyfill';
 import swaggerUi from 'swagger-ui-express';
 import swaggerDocument from '../swagger.json';
 import authRoutes from './routes/authrouters';
