@@ -10,8 +10,8 @@ const authenticate = (req, res, next) => {
     jwt.verify(token, process.env.JWT_KEY, (err, decoded) => {
       if (err) {
         return res.status(401).send({
-          status: '401',
-          message: 'Authorization failed',
+          status: 401,
+          error: 'Authorization failed',
         });
       }
       req.userData = decoded;
@@ -19,8 +19,8 @@ const authenticate = (req, res, next) => {
     });
   } catch (err) {
     return res.status(401).send({
-      status: '401',
-      message: 'Authorization failed',
+      status: 401,
+      error: 'Authorization failed',
     });
   }
 };

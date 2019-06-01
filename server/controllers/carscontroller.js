@@ -1,3 +1,4 @@
+
 /* eslint-disable arrow-body-style */
 /* eslint-disable camelcase */
 import cars from '../model/carsdata';
@@ -94,7 +95,7 @@ export default class CarsControllers {
   }
 
   static deleteCar(req, res) {
-    if (req.userData.id !== 2) {
+    if (req.userData.id !== 3) {
       return res.status(401).json({
         status: 401,
         error: 'Not permited to complete this action',

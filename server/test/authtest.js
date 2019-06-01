@@ -2,9 +2,19 @@
 import chai from 'chai';
 import chaiHttp from 'chai-http';
 import app from '../app';
+import users from '../model/authdata';
 
 const { expect } = chai;
 chai.use(chaiHttp);
+
+const clearUsersData = (done) => {
+  users.splice();
+  done();
+};
+
+after((done) => {
+  clearUsersData(done);
+});
 
 describe('App test the root app', () => {
   // test the root folder
@@ -174,6 +184,19 @@ describe('User', () => {
           expect(res).to.have.status(401);
           expect(res.body.status).to.be.eql(401);
           expect(res.body.error).to.be.eql('Username or password is incorrect');
+        });
+    });
+    it('should return error if an unauthorized user tries to access the routes', async () => {
+      await chai.request(app)
+        .post('/api/v1/car')
+        .set('Authorization', `Bearer ${'bearerToken'}`)
+        .send({
+          state: 'new', price: 5000, manufacturer: 'Toyota', model: '2015', body_type: 'car',
+        })
+        .then((res) => {
+          expect(res).to.have.status(401);
+          expect(res.body.status).to.be.eql(401);
+          expect(res.body.error).to.be.eql('Authorization failed');
         });
     });
   });
