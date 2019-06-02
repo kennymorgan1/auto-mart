@@ -24,6 +24,9 @@
     "coverage": "NODE_ENV=test && babel-node ./node_modules/babel-istanbul/lib/cli cover --hook-run-in-context node_modules/mocha/bin/_mocha -- -R spec --timeout 10000 server/test/*.js --exit"
   },
   "dependencies": {
+    "babel-cli": "^6.26.0",
+    "babel-eslint": "^10.0.1",
+    "babel-preset-env": "^1.7.0",
     "babel-core": "^6.26.3",
     "babel-istanbul": "^0.12.2",
     "babel-loader": "^8.0.4",
@@ -51,9 +54,6 @@
     "swagger-ui-express": "^4.0.5"
   },
   "devDependencies": {
-    "babel-cli": "^6.26.0",
-    "babel-eslint": "^10.0.1",
-    "babel-preset-env": "^1.7.0",
     "chai": "^4.1.2",
     "chai-http": "^4.0.0",
     "coveralls": "^3.0.3",
