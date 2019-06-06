@@ -25,4 +25,22 @@ export default class UserValidation {
       next();
     });
   }
+
+  static resetPassword(req, res, next) {
+    const schema = Joi.object().keys({
+      newPassword: Joi.string().min(7).required().error(new Error('Password must be longer than 7 characters')),
+      confirmNewPassword: Joi.valid(Joi.ref('newPassword')).required().error(new Error('Password does not match')),
+    });
+
+    // eslint-disable-next-line consistent-return
+    Joi.validate(req.body, schema, (error) => {
+      if (error) {
+        return res.status(400).json({
+          status: 400,
+          error: error.message,
+        });
+      }
+      next();
+    });
+  }
 }

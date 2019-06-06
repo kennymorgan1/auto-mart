@@ -9,6 +9,7 @@ dotenv.config();
 
 const secret = process.env.JWT_KEY;
 const expiresIn = process.env.TOKEN_EXPIRY;
+const baseUrl = process.env.BASE_URL;
 
 const generateUserToken = (user) => {
   const dataStoredInToken = {
@@ -76,5 +77,37 @@ export default class AuthControllers {
       return res.status(200).json({ status: 200, data });
     }
     return res.status(401).json({ status: 401, error: 'Username or password is incorrect' });
+  }
+
+  static forgetPassword(req, res) {
+    const { email } = req.body;
+    const user = users.find(result => result.email === email);
+    if (!user) {
+      return res.status(404).json({
+        status: 404,
+        error: 'No user with the email, sign up instead',
+      });
+    }
+    return res.status(200).json({
+      status: 200,
+      data: user,
+      message: `Access this route and supply new password ${baseUrl}/auth/reset_password/${user.id}`,
+    });
+  }
+
+  static resetPassword(req, res) {
+    const user = users.find(result => result.id === parseFloat(req.params.user_id));
+    if (!user) {
+      return res.status(404).json({
+        status: 404,
+        error: 'No user with the email, sign up instead',
+      });
+    }
+    const hashedPassword = bcrypt.hashSync(req.body.newPassword);
+    user.password = hashedPassword;
+    return res.status(200).json({
+      status: 200,
+      message: 'You have successfully changed your password',
+    });
   }
 }

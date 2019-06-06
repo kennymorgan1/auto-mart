@@ -8,4 +8,9 @@ router.post('/signup', AuthValidation.createUser, AuthController.createUser);
 
 router.post('/signin', AuthController.loginUser);
 
+router.put('/forget_password', AuthController.forgetPassword);
+
+
+router.put('/reset_password/:user_id', AuthValidation.resetPassword, AuthController.resetPassword);
+
 export default router;
