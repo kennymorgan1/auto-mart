@@ -1,7 +1,18 @@
 
 /* eslint-disable arrow-body-style */
 /* eslint-disable camelcase */
+import dotenv from 'dotenv';
 import cars from '../model/carsdata';
+
+const cloudinary = require('cloudinary').v2;
+
+
+dotenv.config();
+cloudinary.config({
+  cloud_name: process.env.CLOUDINARY_NAME,
+  api_key: process.env.CLOUDINARY_API_KEY,
+  api_secret: process.env.CLOUDINARY_API_KEY_SECRET,
+});
 
 export default class CarsControllers {
   static postCar(req, res) {
