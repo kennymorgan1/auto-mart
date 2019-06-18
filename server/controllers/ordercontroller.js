@@ -2,29 +2,41 @@
 /* eslint-disable array-callback-return */
 /* eslint-disable object-curly-newline */
 /* eslint-disable camelcase */
+import dotenv from 'dotenv';
+import { Client } from 'pg';
 import orders from '../model/orderdata';
-import cars from '../model/carsdata';
 
-export default class OrderController {
-  static PurchaseOrder(req, res) {
+dotenv.config();
+
+const client = new Client({
+  connectionString: process.env.DATABASE_URL,
+});
+client.connect().then(() => console.log('connected')).catch(err => console.log(err));
+
+const OrderController = {
+  async PurchaseOrder(req, res) {
+    const validCar = 'SELECT * FROM Cars WHERE id = $1';
     const { car_id, price, status } = req.body;
-    const id = orders.length + 1;
     const buyer = req.userData.id;
-    const created_on = new Date();
-    const car = cars.find(result => result.id === car_id);
-    if (!car) {
-      return res.status(404).json({
-        status: 404,
-        error: 'Invalid car selected',
-      });
+    const price_offered = price;
+    const created_on = new Date().toISOString().slice(0, 19).replace('T', ' ');
+    const orderQuery = `INSERT INTO Orders(car_id, price, price_offered, buyer, created_on, status) VALUES ('${car_id}', '${price}', '${price_offered}', '${buyer}', '${created_on}', '${status}') RETURNING *`;
+    try {
+      const { rows } = await client.query(validCar, [car_id]);
+      if (!rows[0]) {
+        return res.status(404).json({ status: 404, error: 'Invalid car selected' });
+      }
+      const result = await client.query(orderQuery);
+      // eslint-disable-next-line object-curly-newline
+      const data = result.rows[0];
+      return res.status(201).json({ status: 201, data });
+    } catch (error) {
+      console.log(error);
+      return res.status(500).json({ status: 500, error });
     }
-    const order = { id, buyer, created_on, car_id, price, status };
-    orders.push(order);
-    const data = { id, car_id, created_on, status, price: car.price, price_offered: price };
-    return res.status(201).json({ status: 201, data });
-  }
+  },
 
-  static updateOrderPrice(req, res) {
+  async updateOrderPrice(req, res) {
     const { price } = req.body;
     // eslint-disable-next-line arrow-body-style
     const order = orders.find((result) => {
@@ -45,5 +57,7 @@ export default class OrderController {
     };
     order.price = price;
     return res.status(200).json({ status: 200, data });
-  }
-}
+  },
+};
+
+export default OrderController;

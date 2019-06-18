@@ -28,7 +28,9 @@ export const orderTable = `
     id SERIAL PRIMARY KEY,
     buyer int,
     car_id int,
-    amount float(24),
+    price float(24),
+    price_offered float(24),
+    created_on date,
     status varchar(50)
   )`;
 
