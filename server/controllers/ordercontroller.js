@@ -4,7 +4,6 @@
 /* eslint-disable camelcase */
 import dotenv from 'dotenv';
 import { Client } from 'pg';
-import orders from '../model/orderdata';
 
 dotenv.config();
 
@@ -38,25 +37,21 @@ const OrderController = {
 
   async updateOrderPrice(req, res) {
     const { price } = req.body;
+    const { order_id } = req.params;
     // eslint-disable-next-line arrow-body-style
-    const order = orders.find((result) => {
-      return (result.id === parseFloat(req.params.order_id)) && (result.buyer === req.userData.id);
-    });
-    if (!order) {
-      return res.status(404).json({
-        status: 404,
-        error: 'Invalid order selected',
-      });
+    const validOrder = 'SELECT * FROM Orders WHERE id = $1 AND buyer = $2';
+    const updateOrder = `UPDATE Orders SET price = '${price}' WHERE id = ${order_id} RETURNING *`;
+    try {
+      const { rows } = await client.query(validOrder, [order_id, req.userData.id]);
+      if (!rows[0]) {
+        return res.status(404).json({ status: 404, error: 'Invalid order selected' });
+      }
+      const result = await client.query(updateOrder);
+      const data = result.rows[0];
+      return res.status(200).json({ status: 200, data });
+    } catch (error) {
+      return res.status(500).json({ status: 500, error });
     }
-    const data = {
-      id: order.id,
-      car_id: order.car_id,
-      status: order.status,
-      old_price_offered: order.price,
-      new_price_offered: price,
-    };
-    order.price = price;
-    return res.status(200).json({ status: 200, data });
   },
 };
 
