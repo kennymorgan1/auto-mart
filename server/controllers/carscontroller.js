@@ -58,18 +58,21 @@ const CarsControllers = {
 
   async updateCarPrice(req, res) {
     const { price } = req.body;
+    const { car_id } = req.params;
+    const validCar = 'SELECT * FROM Cars WHERE id = $1 AND owner = $2';
+    const updateCar = `UPDATE Cars SET price = '${price}' WHERE id = ${car_id} RETURNING *`;
 
-    const car = cars.find((result) => {
-      return (result.id === parseFloat(req.params.car_id) && (result.owner === req.userData.id));
-    });
-    if (!car) {
-      return res.status(404).json({
-        status: 404,
-        error: 'Invalid car selected',
-      });
+    try {
+      const { rows } = await client.query(validCar, [car_id, req.userData.id]);
+      if (!rows[0]) {
+        return res.status(404).json({ status: 404, error: 'Invalid car selected' });
+      }
+      const result = await client.query(updateCar);
+      const data = result.rows[0];
+      return res.status(200).json({ status: 200, data });
+    } catch (error) {
+      return res.status(500).json({ status: 500, error });
     }
-    car.price = price;
-    return res.status(200).json({ status: 200, data: car });
   },
 
   async getOneCar(req, res) {

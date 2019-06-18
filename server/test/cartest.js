@@ -187,77 +187,77 @@ describe('Cars', () => {
         });
     });
 
-    // it('should update a car price successfully', async () => {
-    //   let carId;
-    //   await chai.request(app)
-    //     .post('/api/v1/car')
-    //     .set('Authorization', `Bearer ${bearerToken}`)
-    //     .send({
-    //       state: 'new', price: 5000, manufacturer: 'Toyota', model: '2015', body_type: 'car',
-    //     })
-    //     .then((res) => {
-    //       expect(res).to.have.status(201);
-    //       carId = res.body.data.id;
-    //     });
+    it('should update a car price successfully', async () => {
+      let carId;
+      await chai.request(app)
+        .post('/api/v1/car')
+        .set('Authorization', `Bearer ${bearerToken}`)
+        .send({
+          state: 'new', price: 5000, manufacturer: 'Toyota', model: '2015', body_type: 'car',
+        })
+        .then((res) => {
+          expect(res).to.have.status(201);
+          carId = res.body.data.id;
+        });
 
-    //   await chai.request(app)
-    //     .patch(`/api/v1/car/${carId}/price`)
-    //     .set('Authorization', `Bearer ${bearerToken}`)
-    //     .send({ price: 50000 })
-    //     .then((res) => {
-    //       expect(res).to.have.status(200);
-    //       expect(res.body.data.id).to.be.eql(carId);
-    //       expect(res.body.data.price).to.be.eql(50000);
-    //     });
-    // });
+      await chai.request(app)
+        .patch(`/api/v1/car/${carId}/price`)
+        .set('Authorization', `Bearer ${bearerToken}`)
+        .send({ price: 50000 })
+        .then((res) => {
+          expect(res).to.have.status(200);
+          expect(res.body.data.id).to.be.eql(carId);
+          expect(res.body.data.price).to.be.eql(50000);
+        });
+    });
 
-    // it('should return error if the updated car price is invalid', async () => {
-    //   let carId;
-    //   await chai.request(app)
-    //     .post('/api/v1/car')
-    //     .set('Authorization', `Bearer ${bearerToken}`)
-    //     .send({
-    //       state: 'new', price: 5000, manufacturer: 'Toyota', model: '2015', body_type: 'car',
-    //     })
-    //     .then((res) => {
-    //       expect(res).to.have.status(201);
-    //       carId = res.body.data.id;
-    //     });
+    it('should return error if the updated car price is invalid', async () => {
+      let carId;
+      await chai.request(app)
+        .post('/api/v1/car')
+        .set('Authorization', `Bearer ${bearerToken}`)
+        .send({
+          state: 'new', price: 5000, manufacturer: 'Toyota', model: '2015', body_type: 'car',
+        })
+        .then((res) => {
+          expect(res).to.have.status(201);
+          carId = res.body.data.id;
+        });
 
-    //   await chai.request(app)
-    //     .patch(`/api/v1/car/${carId}/price`)
-    //     .set('Authorization', `Bearer ${bearerToken}`)
-    //     .send({ price: 'invalid' })
-    //     .then((res) => {
-    //       expect(res).to.have.status(400);
-    //       expect(res.body.status).to.be.eql(400);
-    //       expect(res.body.error).to.be.eql('Invalid price supplied');
-    //     });
-    // });
+      await chai.request(app)
+        .patch(`/api/v1/car/${carId}/price`)
+        .set('Authorization', `Bearer ${bearerToken}`)
+        .send({ price: 'invalid' })
+        .then((res) => {
+          expect(res).to.have.status(400);
+          expect(res.body.status).to.be.eql(400);
+          expect(res.body.error).to.be.eql('Invalid price supplied');
+        });
+    });
 
-    // it('should return error if car is invalid', async () => {
-    //   await chai.request(app)
-    //     .patch(`/api/v1/car/${19}/price`)
-    //     .set('Authorization', `Bearer ${bearerToken}`)
-    //     .send({ price: 50000 })
-    //     .then((res) => {
-    //       expect(res).to.have.status(404);
-    //       expect(res.body.status).to.be.eql(404);
-    //       expect(res.body.error).to.be.eql('Invalid car selected');
-    //     });
-    // });
+    it('should return error if car is invalid', async () => {
+      await chai.request(app)
+        .patch(`/api/v1/car/${19}/price`)
+        .set('Authorization', `Bearer ${bearerToken}`)
+        .send({ price: 50000 })
+        .then((res) => {
+          expect(res).to.have.status(404);
+          expect(res.body.status).to.be.eql(404);
+          expect(res.body.error).to.be.eql('Invalid car selected');
+        });
+    });
 
-    // it('should return error if car was not uploaded by user', async () => {
-    //   await chai.request(app)
-    //     .patch(`/api/v1/car/${1}/price`)
-    //     .set('Authorization', `Bearer ${bearerToken}`)
-    //     .send({ price: 50000 })
-    //     .then((res) => {
-    //       expect(res).to.have.status(404);
-    //       expect(res.body.status).to.be.eql(404);
-    //       expect(res.body.error).to.be.eql('Invalid car selected');
-    //     });
-    // });
+    it('should return error if car was not uploaded by user', async () => {
+      await chai.request(app)
+        .patch(`/api/v1/car/${15}/price`)
+        .set('Authorization', `Bearer ${bearerToken}`)
+        .send({ price: 50000 })
+        .then((res) => {
+          expect(res).to.have.status(404);
+          expect(res.body.status).to.be.eql(404);
+          expect(res.body.error).to.be.eql('Invalid car selected');
+        });
+    });
   });
 
   //   describe('GET/ placed car orders', () => {
