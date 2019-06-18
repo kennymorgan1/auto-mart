@@ -15,10 +15,12 @@
   "homepage": "https://github.com/kennymorgan1/auto-mart#readme",
   "scripts": {
     "build": "babel --out-dir dist server",
-    "start": "npm run build && node dist/app.js",
+    "start": "npm run create-tables && npm run build && node dist/app.js",
     "dev": "npm run build && nodemon dist/app.js",
     "lint": "eslint server",
-    "test": "NODE_ENV=test && babel-node ./node_modules/mocha/bin/_mocha --timeout 20000 server/test/*.js --exit || true",
+    "create-tables": "babel-node server/dbconfig/createTables",
+    "drop-tables": "babel-node server/dbconfig/dropTables",
+    "test": "npm run drop-tables && npm run create-tables && babel-node ./node_modules/mocha/bin/_mocha --timeout 20000 server/test/*.js --exit || true",
     "report-coverage": "NODE_ENV=test && babel-node ./node_modules/babel-istanbul/lib/cli cover ./node_modules/mocha/bin/_mocha --report lcovonly -- -R spec server/test/*.js --exit",
     "coveralls": "npm run report-coverage && cat ./coverage/lcov.info | ./node_modules/coveralls/bin/coveralls.js && rm -rf ./coverage",
     "coverage": "NODE_ENV=test && babel-node ./node_modules/babel-istanbul/lib/cli cover --hook-run-in-context node_modules/mocha/bin/_mocha -- -R spec --timeout 10000 server/test/*.js --exit"

@@ -5,27 +5,14 @@ import {
 } from './tables';
 
 dotenv.config();
-let connectionString;
-
-const dbconfig = {
-  development: process.env.DATABASE_URL,
-  test: process.env.DATABASE_TEST_URL,
-};
-
-if (process.env.NODE_ENV === 'development') {
-  connectionString = dbconfig.development;
-  console.log(connectionString);
-} else if (process.env.NODE_ENV === 'test') {
-  connectionString = dbconfig.test;
-  console.log(connectionString, 'oo');
-}
 
 const client = new Client({
-  connectionString,
+  connectionString: process.env.DATABASE_URL,
 });
 
 const creeateTables = async () => {
-  await client.connect();
+  client.connect();
+
   await client.query(userTable);
   await client.query(carTable);
   await client.query(orderTable);
@@ -37,4 +24,4 @@ const creeateTables = async () => {
 
 creeateTables();
 
-export default dbconfig;
+export default client;

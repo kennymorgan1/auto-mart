@@ -1,6 +1,6 @@
 export const userTable = `
   CREATE TABLE IF NOT EXISTS Users (
-    id SERIAL,
+    id SERIAL PRIMARY KEY,
     email varchar(50) UNIQUE,
     first_name varchar(255),
     last_name varchar(255),
@@ -11,7 +11,7 @@ export const userTable = `
 
 export const carTable = `
   CREATE TABLE IF NOT EXISTS Cars (
-    id SERIAL,
+    id SERIAL PRIMARY KEY,
     owner int,
     created_on date,
     state varchar(50),
@@ -24,7 +24,7 @@ export const carTable = `
 
 export const orderTable = `
   CREATE TABLE IF NOT EXISTS Orders (
-    id SERIAL,
+    id SERIAL PRIMARY KEY,
     buyer int,
     car_id int,
     amount float(24),
@@ -33,7 +33,7 @@ export const orderTable = `
 
 export const flagTable = `
   CREATE TABLE IF NOT EXISTS Flags (
-    id SERIAL,
+    id SERIAL PRIMARY KEY,
     car_id int,
     created_on date,
     reason varchar(50),

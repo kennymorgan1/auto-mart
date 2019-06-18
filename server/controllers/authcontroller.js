@@ -3,9 +3,15 @@
 import jwt from 'jsonwebtoken';
 import bcrypt from 'bcryptjs';
 import dotenv from 'dotenv';
+import { Client } from 'pg';
 import users from '../model/authdata';
 
 dotenv.config();
+
+const client = new Client({
+  connectionString: process.env.DATABASE_URL,
+});
+client.connect().then(() => console.log('connected')).catch(err => console.log(err));
 
 const secret = process.env.JWT_KEY;
 const expiresIn = process.env.TOKEN_EXPIRY;
@@ -20,40 +26,41 @@ const generateUserToken = (user) => {
   return token;
 };
 
-export default class AuthControllers {
-  static createUser(req, res) {
+const AuthControllers = {
+  /**
+   * @param {object} req
+   * @param {object} res
+   * @returns {object} users object
+   */
+  async createUser(req, res) {
     // eslint-disable-next-line consistent-return
-    const validUser = users.find(result => result.email === req.body.email);
-    if (validUser) {
-      return res.status(409).json({
-        status: 409,
-        error: 'User with email already exist',
-      });
-    }
+    const validUser = 'SELECT * FROM Users WHERE email = $1';
 
-    const hashedPassword = bcrypt.hashSync(req.body.password);
-    const id = users.length + 1;
+    const params = [req.body.email];
     // eslint-disable-next-line object-curly-newline
     const { email, first_name, last_name, address } = req.body;
-    const user = {
-      id,
-      email,
-      first_name,
-      last_name,
-      password: hashedPassword,
-      address,
-      is_admin: true,
-    };
+    const hashedPassword = bcrypt.hashSync(req.body.password);
+    const createQuery = `
+    INSERT INTO Users(email, first_name, last_name, password, address)
+    VALUES ('${email}', '${first_name}', '${last_name}', '${hashedPassword}', '${address}')
+    RETURNING *
+  `;
+    try {
+      const { rows } = await client.query(validUser, params);
+      if (rows[0]) {
+        return res.status(409).json({ status: 409, error: 'User with email already exist' });
+      }
+      const result = await client.query(createQuery);
+      const token = generateUserToken(result.rows[0]);
+      // eslint-disable-next-line object-curly-newline
+      const data = result.rows[0];
+      return res.status(201).json({ status: 201, data, token });
+    } catch (error) {
+      return res.status(500).json({ status: 500, error });
+    }
+  },
 
-    users.push(user);
-    const token = generateUserToken(user);
-
-    // eslint-disable-next-line object-curly-newline
-    const data = { token, id, first_name, last_name, email };
-    return res.status(201).json({ status: 201, data });
-  }
-
-  static loginUser(req, res) {
+  async loginUser(req, res) {
     const { email, password } = req.body;
     const user = users.find(result => result.email === email);
     if (!user) {
@@ -77,9 +84,9 @@ export default class AuthControllers {
       return res.status(200).json({ status: 200, data });
     }
     return res.status(401).json({ status: 401, error: 'Username or password is incorrect' });
-  }
+  },
 
-  static forgetPassword(req, res) {
+  async forgetPassword(req, res) {
     const { email } = req.body;
     const user = users.find(result => result.email === email);
     if (!user) {
@@ -93,9 +100,9 @@ export default class AuthControllers {
       data: user,
       message: `Access this route and supply new password ${baseUrl}/auth/reset_password/${user.id}`,
     });
-  }
+  },
 
-  static resetPassword(req, res) {
+  async resetPassword(req, res) {
     const user = users.find(result => result.id === parseFloat(req.params.user_id));
     if (!user) {
       return res.status(404).json({
@@ -109,5 +116,7 @@ export default class AuthControllers {
       status: 200,
       message: 'You have successfully changed your password',
     });
-  }
-}
+  },
+};
+
+export default AuthControllers;
