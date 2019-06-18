@@ -62,26 +62,21 @@ const AuthControllers = {
 
   async loginUser(req, res) {
     const { email, password } = req.body;
-    const user = users.find(result => result.email === email);
-    if (!user) {
-      return res.status(401).json({
-        status: 401,
-        error: 'Username or password is incorrect',
-      });
+
+    const validUser = 'SELECT * FROM Users WHERE email = $1';
+    const params = [email];
+
+    const { rows } = await client.query(validUser, params);
+    if (!rows[0]) {
+      return res.status(401).json({ status: 401, error: 'Username or password is incorrect' });
     }
     const isPasswordMatching = bcrypt.compareSync(
-      password, user.password,
+      password, rows[0].password,
     );
     if (isPasswordMatching) {
-      const token = generateUserToken(user);
-      const data = {
-        token,
-        id: user.id,
-        first_name: user.first_name,
-        last_name: user.last_name,
-        email,
-      };
-      return res.status(200).json({ status: 200, data });
+      const token = generateUserToken(rows[0]);
+      const data = rows[0];
+      return res.status(200).json({ status: 200, data, token });
     }
     return res.status(401).json({ status: 401, error: 'Username or password is incorrect' });
   },
