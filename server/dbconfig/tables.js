@@ -30,6 +30,7 @@ export const orderTable = `
     car_id int,
     price float(24),
     price_offered float(24),
+    new_price_offered float (24),
     created_on date,
     status varchar(50)
   )`;

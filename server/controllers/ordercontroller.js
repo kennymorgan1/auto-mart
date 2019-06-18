@@ -40,7 +40,7 @@ const OrderController = {
     const { order_id } = req.params;
     // eslint-disable-next-line arrow-body-style
     const validOrder = 'SELECT * FROM Orders WHERE id = $1 AND buyer = $2';
-    const updateOrder = `UPDATE Orders SET price = '${price}' WHERE id = ${order_id} RETURNING *`;
+    const updateOrder = `UPDATE Orders SET price = '${price}', new_price_offered='${price}' WHERE id = ${order_id} RETURNING *`;
     try {
       const { rows } = await client.query(validOrder, [order_id, req.userData.id]);
       if (!rows[0]) {
