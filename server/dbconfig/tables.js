@@ -14,6 +14,7 @@ export const carTable = `
     id SERIAL PRIMARY KEY,
     owner int,
     created_on date,
+    email varchar(50),
     state varchar(50),
     status varchar(50),
     price float(24),
