@@ -24,7 +24,6 @@ const CarsControllers = {
   async postCar(req, res) {
     // eslint-disable-next-line object-curly-newline
     const { state, price, manufacturer, model, body_type } = req.body;
-    console.log(req.userData);
     const owner = req.userData.id;
     const { email } = req.userData;
     const created_on = new Date().toISOString().slice(0, 19).replace('T', ' ');
@@ -34,7 +33,6 @@ const CarsControllers = {
       const { rows } = await client.query(carQuery);
       return res.status(201).json({ status: 201, data: rows[0] });
     } catch (error) {
-      console.log(error);
       return res.status(500).json({ status: 500, error });
     }
   },
