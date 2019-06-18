@@ -76,14 +76,23 @@ const CarsControllers = {
   },
 
   async getOneCar(req, res) {
-    const car = cars.find(result => result.id === parseFloat(req.params.car_id));
-    if (!car) {
-      return res.status(404).json({
-        status: 404,
-        error: 'Car not found',
+    const oneCarQuery = 'SELECT * FROM Cars WHERE id = $1';
+    const params = [req.params.car_id];
+    try {
+      const { rows } = await client.query(oneCarQuery, params);
+      if (!rows[0]) {
+        return res.status(404).json({
+          status: 404,
+          error: 'Car not found',
+        });
+      }
+      return res.status(200).json({
+        status: 200,
+        data: rows[0],
       });
+    } catch (error) {
+      return res.status(500).json({ status: 500, error });
     }
-    return res.status(200).json({ status: 200, data: car });
   },
 
   async getCars(req, res) {
