@@ -21,6 +21,7 @@ const generateUserToken = (user) => {
   const dataStoredInToken = {
     id: user.id,
     email: user.email,
+    is_admin: user.is_admin,
   };
   const token = jwt.sign(dataStoredInToken, secret, { expiresIn });
   return token;

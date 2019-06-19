@@ -20,6 +20,19 @@ const client = new Client({
 });
 client.connect().then(() => console.log('connected')).catch(err => console.log(err));
 
+const getAllcar = async (req, res) => {
+  const sql = 'SELECT * FROM Cars';
+  try {
+    if (!req.userData.is_admin) {
+      return res.status(401).json({ status: 401, error: 'unauthorized' });
+    }
+    const { rows } = await client.query(sql);
+    return res.status(200).json({ status: 200, data: rows });
+  } catch (error) {
+    return res.status(500).json({ status: 500, error });
+  }
+};
+
 const CarsControllers = {
   async postCar(req, res) {
     // eslint-disable-next-line object-curly-newline
@@ -112,15 +125,8 @@ const CarsControllers = {
         return result.status === status;
       });
     } else {
-      car = cars;
+      await getAllcar(req, res);
     }
-    if (car.length === 0) {
-      return res.status(404).json({
-        status: 404,
-        error: 'Car not found',
-      });
-    }
-    return res.status(200).json({ status: 200, data: car });
   },
 
   async deleteCar(req, res) {
@@ -138,5 +144,6 @@ const CarsControllers = {
     });
   },
 };
+
 
 export default CarsControllers;
