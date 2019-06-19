@@ -1,3 +1,4 @@
+/* eslint-disable object-property-newline */
 /* eslint-disable no-unused-expressions */
 import chai from 'chai';
 import chaiHttp from 'chai-http';
@@ -261,16 +262,40 @@ describe('Cars', () => {
   });
 
   describe('GET/ placed car orders', () => {
-    // it('should view all cars successfully', async () => {
-    //   await chai.request(app)
-    //     .get('/api/v1/car')
-    //     .set('Authorization', `Bearer ${bearerToken}`)
-    //     .then((res) => {
-    //       expect(res).to.have.status(200);
-    //       expect(res.body.status).to.be.eql(200);
-    //       expect(res.body.data).to.be.an('Array');
-    //     });
-    // });
+    it('should view all cars successfully', async () => {
+      await chai.request(app)
+        .get('/api/v1/car')
+        .set('Authorization', `Bearer ${bearerToken}`)
+        .then((res) => {
+          expect(res).to.have.status(401);
+          expect(res.body.status).to.be.eql(401);
+          expect(res.body.error).to.be.eql('unauthorized');
+        });
+    });
+
+    it('should allow a user view all ', async () => {
+      let bearerToken1;
+      const data = {
+        email: 'example@automart23456123.com', first_name: 'Kenneth',
+        last_name: 'Kenneth', password: '12345678', confirmPassword: '12345678', is_admin: true,
+      };
+      await chai.request(app)
+        .post('/api/v1/auth/signup')
+        .send(data)
+        .then((res) => {
+          expect(res).to.have.status(201);
+          bearerToken1 = res.body.token;
+        });
+
+      await chai.request(app)
+        .get('/api/v1/car')
+        .set('Authorization', `Bearer ${bearerToken1}`)
+        .then((res) => {
+          expect(res).to.have.status(200);
+          expect(res.body.status).to.be.eql(200);
+          expect(res.body.data).to.be.an('Array');
+        });
+    });
 
     it('should view a particular car sales', async () => {
       let carId;

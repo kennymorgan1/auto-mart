@@ -21,6 +21,7 @@ const generateUserToken = (user) => {
   const dataStoredInToken = {
     id: user.id,
     email: user.email,
+    is_admin: user.is_admin,
   };
   const token = jwt.sign(dataStoredInToken, secret, { expiresIn });
   return token;
@@ -39,10 +40,14 @@ const AuthControllers = {
     const params = [req.body.email];
     // eslint-disable-next-line object-curly-newline
     const { email, first_name, last_name, address } = req.body;
+    let { is_admin } = req.body;
+    if (is_admin === undefined) {
+      is_admin = false;
+    }
     const hashedPassword = bcrypt.hashSync(req.body.password);
     const createQuery = `
-    INSERT INTO Users(email, first_name, last_name, password, address)
-    VALUES ('${email}', '${first_name}', '${last_name}', '${hashedPassword}', '${address}')
+    INSERT INTO Users(email, first_name, last_name, password, address, is_admin)
+    VALUES ('${email}', '${first_name}', '${last_name}', '${hashedPassword}', '${address}', '${is_admin}')
     RETURNING *
   `;
     try {
@@ -56,6 +61,7 @@ const AuthControllers = {
       const data = result.rows[0];
       return res.status(201).json({ status: 201, data, token });
     } catch (error) {
+      console.log(error);
       return res.status(500).json({ status: 500, error });
     }
   },
