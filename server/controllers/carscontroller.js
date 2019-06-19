@@ -130,18 +130,18 @@ const CarsControllers = {
   },
 
   async deleteCar(req, res) {
-    if (req.userData.id !== 3) {
-      return res.status(401).json({
-        status: 401,
-        error: 'Not permited to complete this action',
-      });
+    const { car_id } = req.params;
+    const deleteQuery = ` DELETE FROM Cars WHERE id = ${Number(car_id)} RETURNING id`;
+
+    try {
+      if (!req.userData.is_admin) {
+        return res.status(401).json({ status: 401, error: 'Not permited to complete this action' });
+      }
+      const { rows } = await client.query(deleteQuery);
+      return res.status(200).json({ status: 200, data: 'Car Ad successfully deleted' });
+    } catch (error) {
+      return res.status(500).json({ status: 500, error });
     }
-    const index = cars.findIndex(result => result.id === parseFloat(req.params.car_id));
-    cars.splice(index, 1);
-    return res.status(200).json({
-      status: 200,
-      data: 'Car Ad successfully deleted',
-    });
   },
 };
 
