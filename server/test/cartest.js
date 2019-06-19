@@ -8,6 +8,7 @@ const { expect } = chai;
 chai.use(chaiHttp);
 
 let bearerToken;
+let bearerToken1;
 describe('Cars', () => {
   it('should create a user succesfully', async () => {
     const data = {
@@ -19,6 +20,20 @@ describe('Cars', () => {
       .then((res) => {
         expect(res).to.have.status(201);
         bearerToken = res.body.token;
+      });
+  });
+
+  it('should create an admin successfully', async () => {
+    const data = {
+      email: 'example@automart23456123.com', first_name: 'Kenneth',
+      last_name: 'Kenneth', password: '12345678', confirmPassword: '12345678', is_admin: true,
+    };
+    await chai.request(app)
+      .post('/api/v1/auth/signup')
+      .send(data)
+      .then((res) => {
+        expect(res).to.have.status(201);
+        bearerToken1 = res.body.token;
       });
   });
   describe('POST/ place car AD if selected car does not exist', () => {
@@ -273,20 +288,7 @@ describe('Cars', () => {
         });
     });
 
-    it('should allow a user view all ', async () => {
-      let bearerToken1;
-      const data = {
-        email: 'example@automart23456123.com', first_name: 'Kenneth',
-        last_name: 'Kenneth', password: '12345678', confirmPassword: '12345678', is_admin: true,
-      };
-      await chai.request(app)
-        .post('/api/v1/auth/signup')
-        .send(data)
-        .then((res) => {
-          expect(res).to.have.status(201);
-          bearerToken1 = res.body.token;
-        });
-
+    it('should allow an admin view all cars', async () => {
       await chai.request(app)
         .get('/api/v1/car')
         .set('Authorization', `Bearer ${bearerToken1}`)
@@ -372,67 +374,55 @@ describe('Cars', () => {
     // });
   });
 
-  // describe('DELETE/ remove posted car add', async () => {
-  //   it('should view a particular car sales', async () => {
-  //     let carId;
-  //     const data = {
-  //       state: 'new', price: 5000, manufacturer: 'Toyota', model: '2015', body_type: 'car',
-  //     };
+  describe('DELETE/ remove posted car add', async () => {
+    it('should delete a particular car sales', async () => {
+      let carId;
+      const data = {
+        state: 'new', price: 5000, manufacturer: 'Toyota', model: '2015', body_type: 'car',
+      };
 
-  //     await chai.request(app)
-  //       .post('/api/v1/car')
-  //       .set('Authorization', `Bearer ${bearerToken}`)
-  //       .send(data)
-  //       .then((res) => {
-  //         expect(res).to.have.status(201);
-  //         carId = res.body.data.id;
-  //       });
+      await chai.request(app)
+        .post('/api/v1/car')
+        .set('Authorization', `Bearer ${bearerToken}`)
+        .send(data)
+        .then((res) => {
+          expect(res).to.have.status(201);
+          carId = res.body.data.id;
+        });
 
-  //     await chai.request(app)
-  //       .delete(`/api/v1/car/${carId}`)
-  //       .set('Authorization', `Bearer ${bearerToken}`)
-  //       .then((res) => {
-  //         expect(res).to.have.status(200);
-  //         expect(res.body.status).to.be.eql(200);
-  //         expect(res.body.data).to.be.eql('Car Ad successfully deleted');
-  //       });
-  //   });
+      await chai.request(app)
+        .delete(`/api/v1/car/${carId}`)
+        .set('Authorization', `Bearer ${bearerToken1}`)
+        .then((res) => {
+          expect(res).to.have.status(200);
+          expect(res.body.status).to.be.eql(200);
+          expect(res.body.data).to.be.eql('Car Ad successfully deleted');
+        });
+    });
 
-  //   it('should return error if an unauthorized user tries to delete an AD', async () => {
-  //     let bearerToken1;
-  //     const data = {
-  //       email: 'example@automart234567.com', first_name: 'Kenneth', last_name: 'Kenneth', password: '12345678', confirmPassword: '12345678',
-  //     };
-  //     await chai.request(app)
-  //       .post('/api/v1/auth/signup')
-  //       .send(data)
-  //       .then((res) => {
-  //         expect(res).to.have.status(201);
-  //         bearerToken1 = res.body.data.token;
-  //       });
+    it('should return error if an unauthorized user tries to delete an AD', async () => {
+      let carId;
+      const data1 = {
+        state: 'new', price: 5000, manufacturer: 'Toyota', model: '2015', body_type: 'car',
+      };
 
-  //     let carId;
-  //     const data1 = {
-  //       state: 'new', price: 5000, manufacturer: 'Toyota', model: '2015', body_type: 'car',
-  //     };
+      await chai.request(app)
+        .post('/api/v1/car')
+        .set('Authorization', `Bearer ${bearerToken}`)
+        .send(data1)
+        .then((res) => {
+          expect(res).to.have.status(201);
+          carId = res.body.data.id;
+        });
 
-  //     await chai.request(app)
-  //       .post('/api/v1/car')
-  //       .set('Authorization', `Bearer ${bearerToken1}`)
-  //       .send(data1)
-  //       .then((res) => {
-  //         expect(res).to.have.status(201);
-  //         carId = res.body.data.id;
-  //       });
-
-  //     await chai.request(app)
-  //       .delete(`/api/v1/car/${carId}`)
-  //       .set('Authorization', `Bearer ${bearerToken1}`)
-  //       .then((res) => {
-  //         expect(res).to.have.status(401);
-  //         expect(res.body.status).to.be.eql(401);
-  //         expect(res.body.error).to.be.eql('Not permited to complete this action');
-  //       });
-  //   });
-  // });
+      await chai.request(app)
+        .delete(`/api/v1/car/${carId}`)
+        .set('Authorization', `Bearer ${bearerToken}`)
+        .then((res) => {
+          expect(res).to.have.status(401);
+          expect(res.body.status).to.be.eql(401);
+          expect(res.body.error).to.be.eql('Not permited to complete this action');
+        });
+    });
+  });
 });
