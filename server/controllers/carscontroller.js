@@ -3,7 +3,6 @@
 /* eslint-disable camelcase */
 import dotenv from 'dotenv';
 import { Client } from 'pg';
-import cars from '../model/carsdata';
 
 const cloudinary = require('cloudinary').v2;
 
@@ -20,18 +19,6 @@ const client = new Client({
 });
 client.connect().then(() => console.log('connected')).catch(err => console.log(err));
 
-const getAllcar = async (req, res) => {
-  const sql = 'SELECT * FROM Cars';
-  try {
-    if (!req.userData.is_admin) {
-      return res.status(401).json({ status: 401, error: 'unauthorized' });
-    }
-    const { rows } = await client.query(sql);
-    return res.status(200).json({ status: 200, data: rows });
-  } catch (error) {
-    return res.status(500).json({ status: 500, error });
-  }
-};
 
 const CarsControllers = {
   async postCar(req, res) {
@@ -109,23 +96,28 @@ const CarsControllers = {
   },
 
   async getCars(req, res) {
-    let car;
-    const { status } = req.query;
-    let { min_price, max_price } = req.query;
-    min_price = parseFloat(min_price);
-    max_price = parseFloat(max_price);
+    let result;
+    const { status, min_price, max_price } = req.query;
 
     if (status && min_price && max_price) {
-      car = cars.filter((result) => {
-        const { price } = result;
-        return (result.status === status) && (price >= min_price) && (price <= max_price);
-      });
-    } else if (status) {
-      car = cars.filter((result) => {
-        return result.status === status;
-      });
+      const sql = 'SELECT * FROM Cars WHERE status >= $1 AND price >= $2 AND price <= $3';
+      result = await client.query(sql, [status, min_price, max_price]);
+    } else if (min_price) {
+      result = 'yes';
     } else {
-      await getAllcar(req, res);
+      if (!req.userData.is_admin) {
+        return res.status(401).json({ status: 401, error: 'unauthorized' });
+      }
+      const sql = 'SELECT * FROM Cars';
+      result = await client.query(sql);
+    }
+    try {
+      if (!result.rows) {
+        return res.status(404).json({ status: 404, error: 'No car found' });
+      }
+      return res.status(200).json({ status: 200, data: result.rows });
+    } catch (error) {
+      return res.status(500).json({ status: 500, error });
     }
   },
 
@@ -138,7 +130,7 @@ const CarsControllers = {
         return res.status(401).json({ status: 401, error: 'Not permited to complete this action' });
       }
       const { rows } = await client.query(deleteQuery);
-      return res.status(200).json({ status: 200, data: 'Car Ad successfully deleted' });
+      return res.status(200).json({ status: 200, data: 'Car Ad successfully deleted', rows });
     } catch (error) {
       return res.status(500).json({ status: 500, error });
     }
