@@ -329,49 +329,49 @@ describe('Cars', () => {
         });
     });
 
-    // it('should return error if an invalid car is selected', async () => {
-    //   await chai.request(app)
-    //     .get(`/api/v1/car/${67}`)
-    //     .set('Authorization', `Bearer ${bearerToken}`)
-    //     .then((res) => {
-    //       expect(res).to.have.status(404);
-    //       expect(res.body.status).to.be.eql(404);
-    //       expect(res.body.error).to.be.eql('Car not found');
-    //     });
-    // });
+    it('should return error if an invalid car is selected', async () => {
+      await chai.request(app)
+        .get(`/api/v1/car/${67}`)
+        .set('Authorization', `Bearer ${bearerToken}`)
+        .then((res) => {
+          expect(res).to.have.status(404);
+          expect(res.body.status).to.be.eql(404);
+          expect(res.body.error).to.be.eql('Car not found');
+        });
+    });
 
-    // it('should view all cars with status available', async () => {
-    //   await chai.request(app)
-    //     .get('/api/v1/car?status=available')
-    //     .set('Authorization', `Bearer ${bearerToken}`)
-    //     .then((res) => {
-    //       expect(res).to.have.status(200);
-    //       expect(res.body.status).to.be.eql(200);
-    //       expect(res.body.data).to.be.an('Array');
-    //     });
-    // });
+    it('should view all cars with status available', async () => {
+      await chai.request(app)
+        .get('/api/v1/car?status=available')
+        .set('Authorization', `Bearer ${bearerToken}`)
+        .then((res) => {
+          expect(res).to.have.status(200);
+          expect(res.body.status).to.be.eql(200);
+          expect(res.body.data).to.be.an('Array');
+        });
+    });
 
-    // it('should view all cars with status available and within a price range', async () => {
-    //   await chai.request(app)
-    //     .get('/api/v1/car?status=available&min_price=1000&max_price=50000')
-    //     .set('Authorization', `Bearer ${bearerToken}`)
-    //     .then((res) => {
-    //       expect(res).to.have.status(200);
-    //       expect(res.body.status).to.be.eql(200);
-    //       expect(res.body.data).to.be.an('Array');
-    //     });
-    // });
+    it('should view all cars with status available and within a price range', async () => {
+      await chai.request(app)
+        .get('/api/v1/car?status=available&min_price=1000&max_price=50000')
+        .set('Authorization', `Bearer ${bearerToken}`)
+        .then((res) => {
+          expect(res).to.have.status(200);
+          expect(res.body.status).to.be.eql(200);
+          expect(res.body.data).to.be.an('Array');
+        });
+    });
 
-    // it('should view all cars with status available and within a price range', async () => {
-    //   await chai.request(app)
-    //     .get('/api/v1/car?status=available&min_price=1000000&max_price=50000000')
-    //     .set('Authorization', `Bearer ${bearerToken}`)
-    //     .then((res) => {
-    //       expect(res).to.have.status(404);
-    //       expect(res.body.status).to.be.eql(404);
-    //       expect(res.body.error).to.be.eql('Car not found');
-    //     });
-    // });
+    it('should view all cars with status available and within a price range', async () => {
+      await chai.request(app)
+        .get('/api/v1/car?status=available&min_price=1000000&max_price=50000000')
+        .set('Authorization', `Bearer ${bearerToken}`)
+        .then((res) => {
+          expect(res).to.have.status(404);
+          expect(res.body.status).to.be.eql(404);
+          expect(res.body.error).to.be.eql('Car not found');
+        });
+    });
   });
 
   describe('DELETE/ remove posted car add', async () => {

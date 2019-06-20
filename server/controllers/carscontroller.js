@@ -102,8 +102,9 @@ const CarsControllers = {
     if (status && min_price && max_price) {
       const sql = 'SELECT * FROM Cars WHERE status >= $1 AND price >= $2 AND price <= $3';
       result = await client.query(sql, [status, min_price, max_price]);
-    } else if (min_price) {
-      result = 'yes';
+    } else if (status) {
+      const sql = 'SELECT * FROM Cars WHERE status >= $1';
+      result = await client.query(sql, [status]);
     } else {
       if (!req.userData.is_admin) {
         return res.status(401).json({ status: 401, error: 'unauthorized' });
@@ -112,8 +113,8 @@ const CarsControllers = {
       result = await client.query(sql);
     }
     try {
-      if (!result.rows) {
-        return res.status(404).json({ status: 404, error: 'No car found' });
+      if (result.rowCount === 0) {
+        return res.status(404).json({ status: 404, error: 'Car not found' });
       }
       return res.status(200).json({ status: 200, data: result.rows });
     } catch (error) {
