@@ -201,103 +201,102 @@ describe('User', () => {
         });
     });
 
-    // it('should return error if an unregistered user tries to change password', async () => {
-    //   const data = {
-    //     email: 'example@automart2345.com', password: '1234567',
-    //   };
-    //   await chai.request(app)
-    //     .put('/api/v1/auth/forget_password')
-    //     .send(data)
-    //     .then((res) => {
-    //       expect(res).to.have.status(404);
-    //       expect(res.body.status).to.be.eql(404);
-    //       expect(res.body.error).to.be.eql('No user with the email, sign up instead');
-    //     });
-    // });
+    it('should return error if an unregistered user tries to change password', async () => {
+      const data = {
+        email: 'example@automart2345.com', password: '1234567',
+      };
+      await chai.request(app)
+        .put('/api/v1/auth/forget_password')
+        .send(data)
+        .then((res) => {
+          expect(res).to.have.status(401);
+          expect(res.body.status).to.be.eql(401);
+          expect(res.body.error).to.be.eql('No user with the email, sign up instead');
+        });
+    });
 
-    // it('should send a user descriptions to change password', async () => {
-    //   const data = {
-    //     email: 'example@automart234.com', password: '1234567',
-    //   };
-    //   await chai.request(app)
-    //     .put('/api/v1/auth/forget_password')
-    //     .send(data)
-    //     .then((res) => {
-    //       expect(res).to.have.status(200);
-    //       expect(res.body.status).to.be.eql(200);
-    //       expect(res.body.data).to.exist;
-    //       expect(res.body.message).to.exist;
-    //     });
-    // });
+    it('should send a user descriptions to change password', async () => {
+      const data = {
+        email: 'example@automart234.com', password: '1234567',
+      };
+      await chai.request(app)
+        .put('/api/v1/auth/forget_password')
+        .send(data)
+        .then((res) => {
+          expect(res).to.have.status(200);
+          expect(res.body.status).to.be.eql(200);
+          expect(res.body.message).to.exist;
+        });
+    });
 
-    // it('should return error if an unregistered user access the reset password', async () => {
-    //   const data = {
-    //     newPassword: '12345678', confirmNewPassword: '12345678',
-    //   };
-    //   await chai.request(app)
-    //     .put('/api/v1/auth/reset_password/50')
-    //     .send(data)
-    //     .then((res) => {
-    //       expect(res).to.have.status(404);
-    //       expect(res.body.status).to.be.eql(404);
-    //       expect(res.body.error).to.be.eql('No user with the email, sign up instead');
-    //     });
-    // });
+    it('should return error if an unregistered user access the reset password', async () => {
+      const data = {
+        newPassword: '12345678', confirmNewPassword: '12345678',
+      };
+      await chai.request(app)
+        .put('/api/v1/auth/reset_password/50')
+        .send(data)
+        .then((res) => {
+          expect(res).to.have.status(401);
+          expect(res.body.status).to.be.eql(401);
+          expect(res.body.error).to.be.eql('No user with the email, sign up instead');
+        });
+    });
 
-    // it('should return error if password is invalid', async () => {
-    //   let userId;
-    //   const data = {
-    //     newPassword: '12345', confirmNewPassword: '12345',
-    //   };
+    it('should return error if password is invalid', async () => {
+      let userId;
+      const data = {
+        newPassword: '12345', confirmNewPassword: '12345',
+      };
 
-    //   await chai.request(app)
-    //     .post('/api/v1/auth/signin')
-    //     .send({
-    //       email: 'example@automart234.com', password: '12345678',
-    //     })
-    //     .then((res) => {
-    //       expect(res).to.have.status(200);
-    //       expect(res.body.status).to.be.eql(200);
-    //       expect(res.body.data).to.exist;
-    //       userId = res.body.data.id;
-    //     });
+      await chai.request(app)
+        .post('/api/v1/auth/signin')
+        .send({
+          email: 'example@automart234.com', password: '12345678',
+        })
+        .then((res) => {
+          expect(res).to.have.status(200);
+          expect(res.body.status).to.be.eql(200);
+          expect(res.body.data).to.exist;
+          userId = res.body.data.id;
+        });
 
-    //   await chai.request(app)
-    //     .put(`/api/v1/auth/reset_password/${userId}`)
-    //     .send(data)
-    //     .then((res) => {
-    //       expect(res).to.have.status(400);
-    //       expect(res.body.status).to.be.eql(400);
-    //       expect(res.body.error).to.be.eql('Password must be longer than 7 characters');
-    //     });
-    // });
+      await chai.request(app)
+        .put(`/api/v1/auth/reset_password/${userId}`)
+        .send(data)
+        .then((res) => {
+          expect(res).to.have.status(400);
+          expect(res.body.status).to.be.eql(400);
+          expect(res.body.error).to.be.eql('Password must be longer than 7 characters');
+        });
+    });
 
-    // it('should return error if new password does not match', async () => {
-    //   let userId;
-    //   const data = {
-    //     newPassword: '1234567', confirmNewPassword: '12345',
-    //   };
+    it('should return error if new password does not match', async () => {
+      let userId;
+      const data = {
+        newPassword: '1234567', confirmNewPassword: '12345',
+      };
 
-    //   await chai.request(app)
-    //     .post('/api/v1/auth/signin')
-    //     .send({
-    //       email: 'example@automart234.com', password: '12345678',
-    //     })
-    //     .then((res) => {
-    //       expect(res).to.have.status(200);
-    //       expect(res.body.status).to.be.eql(200);
-    //       expect(res.body.data).to.exist;
-    //       userId = res.body.data.id;
-    //     });
+      await chai.request(app)
+        .post('/api/v1/auth/signin')
+        .send({
+          email: 'example@automart234.com', password: '12345678',
+        })
+        .then((res) => {
+          expect(res).to.have.status(200);
+          expect(res.body.status).to.be.eql(200);
+          expect(res.body.data).to.exist;
+          userId = res.body.data.id;
+        });
 
-    //   await chai.request(app)
-    //     .put(`/api/v1/auth/reset_password/${userId}`)
-    //     .send(data)
-    //     .then((res) => {
-    //       expect(res).to.have.status(400);
-    //       expect(res.body.status).to.be.eql(400);
-    //       expect(res.body.error).to.be.eql('Password does not match');
-    //     });
-    // });
+      await chai.request(app)
+        .put(`/api/v1/auth/reset_password/${userId}`)
+        .send(data)
+        .then((res) => {
+          expect(res).to.have.status(400);
+          expect(res.body.status).to.be.eql(400);
+          expect(res.body.error).to.be.eql('Password does not match');
+        });
+    });
   });
 });
