@@ -4,7 +4,7 @@ import jwt from 'jsonwebtoken';
 import bcrypt from 'bcryptjs';
 import dotenv from 'dotenv';
 import { Client } from 'pg';
-import users from '../model/authdata';
+import sendMail from '../helpers/email';
 
 dotenv.config();
 
@@ -15,7 +15,6 @@ client.connect().then(() => console.log('connected')).catch(err => console.log(e
 
 const secret = process.env.JWT_KEY;
 const expiresIn = process.env.TOKEN_EXPIRY;
-const baseUrl = process.env.BASE_URL;
 
 const generateUserToken = (user) => {
   const dataStoredInToken = {
@@ -61,7 +60,6 @@ const AuthControllers = {
       const data = result.rows[0];
       return res.status(201).json({ status: 201, data, token });
     } catch (error) {
-      console.log(error);
       return res.status(500).json({ status: 500, error });
     }
   },
@@ -89,32 +87,44 @@ const AuthControllers = {
 
   async forgetPassword(req, res) {
     const { email } = req.body;
-    const user = users.find(result => result.email === email);
-    if (!user) {
-      return res.status(404).json({
-        status: 404,
-        error: 'No user with the email, sign up instead',
-      });
+
+    const validUser = 'SELECT * FROM Users WHERE email = $1';
+
+    const { rows } = await client.query(validUser, [email]);
+    if (!rows[0]) {
+      return res.status(401).json({ status: 401, error: 'No user with the email, sign up instead' });
     }
+
+    const payload = {
+      first_name: rows[0].first_name,
+      user_id: rows[0].id,
+      email: rows[0].email,
+    };
+    await sendMail(payload);
+
     return res.status(200).json({
       status: 200,
-      data: user,
-      message: `Access this route and supply new password ${baseUrl}/auth/reset_password/${user.id}`,
+      message: `A link has been sent to ${rows[0].email} enter link to change password`,
     });
   },
 
   async resetPassword(req, res) {
-    const user = users.find(result => result.id === parseFloat(req.params.user_id));
-    if (!user) {
-      return res.status(404).json({
-        status: 404,
-        error: 'No user with the email, sign up instead',
-      });
+    const { user_id } = req.params;
+    const validUser = 'SELECT * FROM Users WHERE id = $1';
+    console.log(user_id);
+
+    const { rows } = await client.query(validUser, [user_id]);
+    if (!rows[0]) {
+      return res.status(401).json({ status: 401, error: 'No user with the email, sign up instead' });
     }
+
     const hashedPassword = bcrypt.hashSync(req.body.newPassword);
-    user.password = hashedPassword;
+
+    const updateCar = `UPDATE Users SET password = '${hashedPassword}' WHERE id = ${user_id} RETURNING *`;
+    const result = await client.query(updateCar);
     return res.status(200).json({
       status: 200,
+      data: result.rows[0],
       message: 'You have successfully changed your password',
     });
   },
