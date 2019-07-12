@@ -111,7 +111,6 @@ const AuthControllers = {
   async resetPassword(req, res) {
     const { user_id } = req.params;
     const validUser = 'SELECT * FROM Users WHERE id = $1';
-    console.log(user_id);
 
     const { rows } = await client.query(validUser, [user_id]);
     if (!rows[0]) {
