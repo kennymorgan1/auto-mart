@@ -9,7 +9,7 @@ export default class UserValidation {
         .error(new Error('Last name must be between 5 to 100 digits')),
       email: Joi.string().email().required().lowercase()
         .error(new Error('Incorrect email supplied')),
-      password: Joi.string().min(7).required().error(new Error('Password must be longer than 7 characters')),
+      password: Joi.string().error(new Error('Password must be longer than 7 characters')),
       address: Joi.string().min(7).max(150).error(new Error('Address must be between 7 to 150 characters')),
       is_admin: Joi.boolean().error(new Error('is_admin must ba a valid boolean')),
     });
