@@ -26,6 +26,12 @@ const CarsControllers = {
     const { state, price, manufacturer, model, body_type } = req.body;
     const owner = req.userData.id;
     const { email } = req.userData;
+    if (price <= 0) {
+      return res.status(400).json({
+        status: 400,
+        error: 'Invalid price supplied',
+      });
+    }
     const created_on = new Date().toISOString().slice(0, 19).replace('T', ' ');
     const status = 'available';
     const carQuery = `INSERT INTO Cars(state, price, manufacturer, model, body_type, owner, email, created_on, status) VALUES ('${state}', '${price}', '${manufacturer}', '${model}', '${body_type}', '${owner}', '${email}', '${created_on}', '${status}') RETURNING *`;
@@ -58,6 +64,12 @@ const CarsControllers = {
 
   async updateCarPrice(req, res) {
     const { price } = req.body;
+    if (price <= 0) {
+      return res.status(400).json({
+        status: 400,
+        error: 'Invalid price supplied',
+      });
+    }
     const { car_id } = req.params;
     const validCar = 'SELECT * FROM Cars WHERE id = $1 AND owner = $2';
     const updateCar = `UPDATE Cars SET price = '${price}' WHERE id = ${car_id} RETURNING *`;

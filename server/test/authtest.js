@@ -52,7 +52,7 @@ describe('User', () => {
           expect(res).to.have.status(201);
           expect(res.body.status).to.be.eql(201);
           expect(res.body.data.id).exist;
-          expect(res.body.token).exist;
+          expect(res.body.data.token).exist;
           expect(res.body.data.first_name).to.be.eql(data.first_name);
           expect(res.body.data.last_name).to.be.eql(data.last_name);
           expect(res.body.data.email).to.be.eql(data.email);
@@ -117,7 +117,7 @@ describe('User', () => {
 
     it('should return error if password is invalid', async () => {
       const data = {
-        email: 'example@automart.com', first_name: 'Kenneth', last_name: 'Kenneth', password: '12345', confirmPassword: '12345678',
+        email: 'example@automart.com', first_name: 'Kenneth', last_name: 'Kenneth', password: '12345', confirmPassword: '12345',
       };
       await chai.request(app)
         .post('/api/v1/auth/signup')
@@ -153,7 +153,7 @@ describe('User', () => {
         .send(data)
         .then((res) => {
           expect(res).to.have.status(200);
-          expect(res.body.token).exist;
+          expect(res.body.data.token).exist;
           expect(res.body.data.id).exist;
           expect(res.body.data.email).to.be.eql(data.email);
         });

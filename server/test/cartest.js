@@ -19,7 +19,7 @@ describe('Cars', () => {
       .send(data)
       .then((res) => {
         expect(res).to.have.status(201);
-        bearerToken = res.body.token;
+        bearerToken = res.body.data.token;
       });
   });
 
@@ -33,7 +33,7 @@ describe('Cars', () => {
       .send(data)
       .then((res) => {
         expect(res).to.have.status(201);
-        bearerToken1 = res.body.token;
+        bearerToken1 = res.body.data.token;
       });
   });
   describe('POST/ place car AD if selected car does not exist', () => {

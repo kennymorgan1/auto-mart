@@ -17,7 +17,7 @@ describe('Orders', () => {
       .send(data)
       .then((res) => {
         expect(res).to.have.status(201);
-        bearerToken = res.body.token;
+        bearerToken = res.body.data.token;
       });
   });
   describe('POST/ place order if selected car does not exist', () => {

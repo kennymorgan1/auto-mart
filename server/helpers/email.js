@@ -1,32 +1,20 @@
 import dotenv from 'dotenv';
-import nodemailer from 'nodemailer';
+import SGmail from '@sendgrid/mail';
 
 dotenv.config();
 
 const baseUrl = process.env.BASE_URL;
 
-const transporter = nodemailer.createTransport({
-  service: 'gmail',
-  auth: {
-    user: process.env.EMAIL_ADDRESS,
-    pass: process.env.EMAIL_PASSWORD,
-  },
-});
-
 const sendMail = (payload) => {
-  const mailOptions = {
-    from: process.env.EMAIL_ADDRESS,
+  SGmail.setApiKey(process.env.EMAIL_KEY);
+  const msg = {
     to: payload.email,
+    from: 'email@automart.com',
     subject: 'Reset Password',
-    html: ` Hi ${payload.first_name}, click on this link to change password ${baseUrl}/auth/reset_password/${payload.user_id}}`,
+    html: `<p>Hi ${payload.first_name}, click on this link to change password ${baseUrl}/auth/reset_password/${payload.user_id}}</p>`,
   };
-  return transporter.sendMail(mailOptions, (err, info) => {
-    if (err) {
-      console.log(err);
-    } else {
-      console.log(info);
-    }
-  });
+
+  SGmail.send(msg);
 };
 
 export default sendMail;
