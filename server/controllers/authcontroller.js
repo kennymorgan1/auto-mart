@@ -57,8 +57,17 @@ const AuthControllers = {
       const result = await client.query(createQuery);
       const token = generateUserToken(result.rows[0]);
       // eslint-disable-next-line object-curly-newline
-      const data = result.rows[0];
-      return res.status(201).json({ status: 201, data, token });
+      const dataResult = result.rows[0];
+      const data = {
+        id: dataResult.id,
+        email: dataResult.email,
+        first_name: dataResult.first_name,
+        last_name: dataResult.last_name,
+        address: dataResult.address,
+        is_admin: dataResult.is_admin,
+        token,
+      };
+      return res.status(201).json({ status: 201, data });
     } catch (error) {
       return res.status(500).json({ status: 500, error });
     }
@@ -79,8 +88,17 @@ const AuthControllers = {
     );
     if (isPasswordMatching) {
       const token = generateUserToken(rows[0]);
-      const data = rows[0];
-      return res.status(200).json({ status: 200, data, token });
+      const dataResult = rows[0];
+      const data = {
+        id: dataResult.id,
+        email: dataResult.email,
+        first_name: dataResult.first_name,
+        last_name: dataResult.last_name,
+        address: dataResult.address,
+        is_admin: dataResult.is_admin,
+        token,
+      };
+      return res.status(200).json({ status: 200, data });
     }
     return res.status(401).json({ status: 401, error: 'Username or password is incorrect' });
   },

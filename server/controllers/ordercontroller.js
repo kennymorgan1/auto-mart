@@ -17,6 +17,12 @@ const OrderController = {
     const validCar = 'SELECT * FROM Cars WHERE id = $1';
     const { car_id, price, status } = req.body;
     const buyer = req.userData.id;
+    if (price <= 0) {
+      return res.status(400).json({
+        status: 400,
+        error: 'Invalid price supplied',
+      });
+    }
     const price_offered = price;
     const created_on = new Date().toISOString().slice(0, 19).replace('T', ' ');
     const orderQuery = `INSERT INTO Orders(car_id, price, price_offered, buyer, created_on, status) VALUES ('${car_id}', '${price}', '${price_offered}', '${buyer}', '${created_on}', '${status}') RETURNING *`;
@@ -38,6 +44,12 @@ const OrderController = {
   async updateOrderPrice(req, res) {
     const { price } = req.body;
     const { order_id } = req.params;
+    if (price <= 0) {
+      return res.status(400).json({
+        status: 400,
+        error: 'Invalid price supplied',
+      });
+    }
     // eslint-disable-next-line arrow-body-style
     const validOrder = 'SELECT * FROM Orders WHERE id = $1 AND buyer = $2';
     const updateOrder = `UPDATE Orders SET price = '${price}', new_price_offered='${price}' WHERE id = ${order_id} RETURNING *`;
